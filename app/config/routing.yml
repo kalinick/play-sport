@@ -1,0 +1,5 @@
+ps_front:
+    resource: "@PsFrontBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
