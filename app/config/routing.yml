@@ -1,3 +1,8 @@
+ps_football:
+    resource: "@PsFootballBundle/Controller/"
+    type:     annotation
+    prefix:   /football/
+
 ps_front:
     resource: "@PsFrontBundle/Controller/"
     type:     annotation
