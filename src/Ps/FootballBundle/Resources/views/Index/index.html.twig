@@ -1,6 +1,6 @@
 <div>События :</div>
 <ul>
     {% for event in events %}
-        <li><a href="#">{{ event.title }}</a></li>
+        <li><a href="{{ url('football_event_index', {'id': event.id}) }}">{{ event.title }}: {{ event.dateStart.format('m-d H:i') }} - {{ event.dateEnd.format('m-d H:i') }}</a></li>
     {% endfor %}
 </ul>

@@ -17,19 +17,21 @@ class UserData extends AbstractFixture implements OrderedFixtureInterface
 {
     public function load(ObjectManager $manager)
     {
-        $mainUser = new User();
-        $mainUser->setEmail("kalinick@gmail.com");
-        $mainUser->setEmailCanonical("kalinick@gmail.com");
-        $mainUser->setUsername("kalinick");
-        $mainUser->setUsernameCanonical("kalinick");
-        $mainUser->setEnabled(true);
-        $mainUser->setLocked(false);
-        $mainUser->setPlainPassword("freedom");
-        $mainUser->setRoles(['ROLE_SUPER_ADMIN']);
-        $mainUser->setCity($this->getReference('city-donetsk'));
-        $manager->persist($mainUser);
+        $superAdmin = new User();
+        $superAdmin->setEmail("kalinick@gmail.com");
+        $superAdmin->setEmailCanonical("kalinick@gmail.com");
+        $superAdmin->setUsername("kalinick");
+        $superAdmin->setUsernameCanonical("kalinick");
+        $superAdmin->setEnabled(true);
+        $superAdmin->setLocked(false);
+        $superAdmin->setPlainPassword("freedom");
+        $superAdmin->setRoles(['ROLE_SUPER_ADMIN']);
+        $superAdmin->setCity($this->getReference('city-donetsk'));
+        $manager->persist($superAdmin);
 
         $manager->flush();
+
+        $this->addReference('super-admin', $superAdmin);
     }
 
     public function getOrder()

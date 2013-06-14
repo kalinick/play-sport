@@ -1,8 +1,8 @@
 <?php
 /**
  * User: nikk
- * Date: 6/4/13
- * Time: 5:11 PM
+ * Date: 6/14/13
+ * Time: 5:12 PM
  */
 
 namespace Ps\FootballBundle\Controller;
@@ -11,15 +11,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
-class IndexController extends Controller
+class EventController extends Controller
 {
     /**
-     * @Route("/", name="football_index")
+     * @Route("/event/{id}", name="football_event_index")
      * @Template()
      */
-    public function indexAction()
+    public function indexAction($id)
     {
-        $repository = $this->getDoctrine()->getRepository('PsAppBundle:Event');
-        return ['events' => $repository->findAll()];
+        return [];
     }
 }

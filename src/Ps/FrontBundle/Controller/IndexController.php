@@ -19,6 +19,6 @@ class IndexController extends Controller
      */
     public function indexAction()
     {
-        return array('name' => 'nikit1a');
+        return [];
     }
 }
