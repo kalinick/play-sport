@@ -25,7 +25,7 @@ class Place
     /**
      * @ORM\Column(type="string", length=255)
      */
-    protected $name;
+    protected $title;
 
     /**
      * @ORM\ManyToOne(targetEntity="City", inversedBy="places")
@@ -44,26 +44,26 @@ class Place
     }
 
     /**
-     * Set name
+     * Set title
      *
-     * @param string $name
+     * @param string $title
      * @return Place
      */
-    public function setName($name)
+    public function setTitle($title)
     {
-        $this->name = $name;
-    
+        $this->title = $title;
+
         return $this;
     }
 
     /**
-     * Get name
+     * Get title
      *
-     * @return string 
+     * @return string
      */
-    public function getName()
+    public function getTitle()
     {
-        return $this->name;
+        return $this->title;
     }
 
     /**

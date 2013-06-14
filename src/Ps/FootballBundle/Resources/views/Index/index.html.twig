@@ -1,6 +1,6 @@
-<div>{{ 'events'|trans }} :</div>
+<div>События :</div>
 <ul>
     {% for event in events %}
-        <li></li>
+        <li><a href="#">{{ event.title }}</a></li>
     {% endfor %}
 </ul>

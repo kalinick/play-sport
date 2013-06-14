@@ -20,6 +20,7 @@ class AppKernel extends Kernel
             new Ps\FootballBundle\PsFootballBundle(),
             new Ps\AppBundle\PsAppBundle(),
             new FOS\UserBundle\FOSUserBundle(),
+            new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

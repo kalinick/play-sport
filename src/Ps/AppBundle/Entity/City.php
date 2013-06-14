@@ -25,7 +25,7 @@ class City
     /**
      * @ORM\Column(type="string", length=255)
      */
-    protected $name;
+    protected $title;
 
     /**
      * @ORM\OneToMany(targetEntity="Place", mappedBy="city")
@@ -56,26 +56,26 @@ class City
     }
 
     /**
-     * Set name
+     * Set title
      *
-     * @param string $name
+     * @param string $title
      * @return City
      */
-    public function setName($name)
+    public function setTitle($title)
     {
-        $this->name = $name;
-    
+        $this->title = $title;
+
         return $this;
     }
 
     /**
-     * Get name
+     * Get title
      *
-     * @return string 
+     * @return string
      */
-    public function getName()
+    public function getTitle()
     {
-        return $this->name;
+        return $this->title;
     }
 
     /**

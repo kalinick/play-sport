@@ -19,7 +19,7 @@ class IndexController extends Controller
      */
     public function indexAction()
     {
-        $events = [1, 2];
-        return array('events' => $events);
+        $repository = $this->getDoctrine()->getRepository('PsAppBundle:Event');
+        return array('events' => $repository->findAll());
     }
 }

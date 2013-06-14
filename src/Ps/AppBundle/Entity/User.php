@@ -29,6 +29,11 @@ class User extends BaseUser
      */
     protected $city;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Event", mappedBy="organizer")
+     */
+    protected $events;
+
     public function __construct()
     {
         parent::__construct();
@@ -65,5 +70,38 @@ class User extends BaseUser
     public function getCity()
     {
         return $this->city;
+    }
+
+    /**
+     * Add events
+     *
+     * @param \Ps\AppBundle\Entity\Event $events
+     * @return User
+     */
+    public function addEvent(\Ps\AppBundle\Entity\Event $events)
+    {
+        $this->events[] = $events;
+    
+        return $this;
+    }
+
+    /**
+     * Remove events
+     *
+     * @param \Ps\AppBundle\Entity\Event $events
+     */
+    public function removeEvent(\Ps\AppBundle\Entity\Event $events)
+    {
+        $this->events->removeElement($events);
+    }
+
+    /**
+     * Get events
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getEvents()
+    {
+        return $this->events;
     }
 }
