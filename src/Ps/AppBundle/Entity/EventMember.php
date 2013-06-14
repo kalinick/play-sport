@@ -23,7 +23,7 @@ class EventMember
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="eventMembers")
+     * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     protected $user;

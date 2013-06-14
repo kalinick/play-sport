@@ -44,6 +44,11 @@ class Event
     protected $dateEnd;
 
     /**
+     * @ORM\OneToMany(targetEntity="EventMember", mappedBy="event")
+     */
+    protected $eventMembers;
+
+    /**
      * Get id
      *
      * @return integer 
@@ -143,5 +148,45 @@ class Event
     public function getOrganizer()
     {
         return $this->organizer;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->eventMembers = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    /**
+     * Add eventMembers
+     *
+     * @param \Ps\AppBundle\Entity\EventMember $eventMembers
+     * @return Event
+     */
+    public function addEventMember(\Ps\AppBundle\Entity\EventMember $eventMembers)
+    {
+        $this->eventMembers[] = $eventMembers;
+    
+        return $this;
+    }
+
+    /**
+     * Remove eventMembers
+     *
+     * @param \Ps\AppBundle\Entity\EventMember $eventMembers
+     */
+    public function removeEventMember(\Ps\AppBundle\Entity\EventMember $eventMembers)
+    {
+        $this->eventMembers->removeElement($eventMembers);
+    }
+
+    /**
+     * Get eventMembers
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getEventMembers()
+    {
+        return $this->eventMembers;
     }
 }
