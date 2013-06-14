@@ -1,11 +1,11 @@
 <?php
 /**
  * User: nikk
- * Date: 6/4/13
- * Time: 5:11 PM
+ * Date: 6/14/13
+ * Time: 1:18 PM
  */
 
-namespace Ps\FootballBundle\Controller;
+namespace Ps\AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -14,12 +14,12 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 class IndexController extends Controller
 {
     /**
-     * @Route("/", name="football_index")
+     * @Route("/", name="index")
      * @Template()
      */
     public function indexAction()
     {
-        $events = [1, 2];
-        return array('events' => $events);
+        $locale = $this->getRequest()->getLocale();
+        return $this->redirect($this->generateUrl('front_index', ['_locale' => $locale]));
     }
 }

@@ -28,6 +28,12 @@ class Place
     protected $name;
 
     /**
+     * @ORM\ManyToOne(targetEntity="City", inversedBy="places")
+     * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
+     */
+    protected $city;
+
+    /**
      * Get id
      *
      * @return integer 
@@ -58,5 +64,28 @@ class Place
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Set city
+     *
+     * @param \Ps\AppBundle\Entity\City $city
+     * @return Place
+     */
+    public function setCity(\Ps\AppBundle\Entity\City $city = null)
+    {
+        $this->city = $city;
+    
+        return $this;
+    }
+
+    /**
+     * Get city
+     *
+     * @return \Ps\AppBundle\Entity\City 
+     */
+    public function getCity()
+    {
+        return $this->city;
     }
 }

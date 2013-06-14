@@ -1,28 +1,54 @@
-ps_football:
-    resource: "@PsFootballBundle/Controller/"
+ps_app_bundle:
+    resource: "@PsAppBundle/Controller/"
     type:     annotation
-    prefix:   /football/
+    prefix:   /
 
 ps_front:
     resource: "@PsFrontBundle/Controller/"
     type:     annotation
-    prefix:   /
+    prefix:   /{_locale}/
+    defaults:  { _locale: en }
+    requirements:
+        _locale: en|ru
+
+ps_football:
+    resource: "@PsFootballBundle/Controller/"
+    type:     annotation
+    prefix:   /{_locale}/football/
+    requirements:
+        _locale: en|ru
 
 fos_user_security:
     resource: "@FOSUserBundle/Resources/config/routing/security.xml"
+    prefix:   /{_locale}/
+    defaults:  { _locale: en }
+    requirements:
+        _locale: en|ru
 
 fos_user_profile:
     resource: "@FOSUserBundle/Resources/config/routing/profile.xml"
-    prefix: /profile
+    prefix: /{_locale}/profile
+    defaults:  { _locale: en }
+    requirements:
+        _locale: en|ru
 
 fos_user_register:
     resource: "@FOSUserBundle/Resources/config/routing/registration.xml"
-    prefix: /register
+    prefix: /{_locale}/register
+    defaults:  { _locale: en }
+    requirements:
+        _locale: en|ru
 
 fos_user_resetting:
     resource: "@FOSUserBundle/Resources/config/routing/resetting.xml"
-    prefix: /resetting
+    prefix: /{_locale}/resetting
+    defaults:  { _locale: en }
+    requirements:
+        _locale: en|ru
 
 fos_user_change_password:
     resource: "@FOSUserBundle/Resources/config/routing/change_password.xml"
-    prefix: /profile
+    prefix: /{_locale}/profile
+    defaults:  { _locale: en }
+    requirements:
+        _locale: en|ru

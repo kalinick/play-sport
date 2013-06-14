@@ -23,6 +23,12 @@ class User extends BaseUser
      */
     protected $id;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="City", inversedBy="users")
+     * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
+     */
+    protected $city;
+
     public function __construct()
     {
         parent::__construct();
@@ -36,5 +42,28 @@ class User extends BaseUser
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set city
+     *
+     * @param \Ps\AppBundle\Entity\City $city
+     * @return User
+     */
+    public function setCity(\Ps\AppBundle\Entity\City $city = null)
+    {
+        $this->city = $city;
+    
+        return $this;
+    }
+
+    /**
+     * Get city
+     *
+     * @return \Ps\AppBundle\Entity\City 
+     */
+    public function getCity()
+    {
+        return $this->city;
     }
 }
