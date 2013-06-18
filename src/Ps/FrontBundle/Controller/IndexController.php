@@ -19,6 +19,6 @@ class IndexController extends Controller
      */
     public function indexAction()
     {
-        return [];
+        return $this->redirect($this->generateUrl('football_index'));
     }
 }

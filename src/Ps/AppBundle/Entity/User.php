@@ -25,7 +25,7 @@ class User extends BaseUser
 
     /**
      * @ORM\ManyToOne(targetEntity="City", inversedBy="users")
-     * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="city_id", referencedColumnName="id", nullable=false)
      */
     protected $city;
 
@@ -34,9 +34,17 @@ class User extends BaseUser
      */
     protected $events;
 
+    /**
+     * @ORM\OneToMany(targetEntity="UserFriend", mappedBy="user")
+     */
+    protected $userFriends;
+
     public function __construct()
     {
         parent::__construct();
+
+        $this->events = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->userFriends = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -103,5 +111,38 @@ class User extends BaseUser
     public function getEvents()
     {
         return $this->events;
+    }
+
+    /**
+     * Add userFriends
+     *
+     * @param \Ps\AppBundle\Entity\UserFriend $userFriends
+     * @return User
+     */
+    public function addUserFriend(\Ps\AppBundle\Entity\UserFriend $userFriends)
+    {
+        $this->userFriends[] = $userFriends;
+    
+        return $this;
+    }
+
+    /**
+     * Remove userFriends
+     *
+     * @param \Ps\AppBundle\Entity\UserFriend $userFriends
+     */
+    public function removeUserFriend(\Ps\AppBundle\Entity\UserFriend $userFriends)
+    {
+        $this->userFriends->removeElement($userFriends);
+    }
+
+    /**
+     * Get userFriends
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getUserFriends()
+    {
+        return $this->userFriends;
     }
 }

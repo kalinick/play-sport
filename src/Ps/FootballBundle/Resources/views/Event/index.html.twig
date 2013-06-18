@@ -1,1 +1,31 @@
+{% extends 'PsFootballBundle::base.html.twig' %}
+
+{% block body %}
 Учасники:
+<ul>
+    {% for eventMember in event.eventMembers %}
+    <li>
+        {{ eventMember.user.username }}
+    </li>
+    {% endfor %}
+    {% if user.authorized %}
+        <input class="participate {% if user.subscribed %}hidden{% endif %}" type="button" data-val="1" value="Прийму участие"/>
+        <input class="participate {% if not user.subscribed %}hidden{% endif %}" type="button" data-val="0" value="Не прийму участие"/>
+    {% endif %}
+</ul>
+{% endblock%}
+
+{% block javascripts %}
+    {{ parent() }}
+<script type="text/javascript">
+$(function() {
+    $('.participate').button().click(function(){
+        $.ajax({
+            url: "{{ url('football_event_participate_user', {'id': event.id}) }}",
+            type: "POST",
+            data: {'participate': $(this).data('val')}
+        }).done(function(){$('.participate').toggleClass('hidden')});
+    });
+});
+</script>
+{% endblock %}

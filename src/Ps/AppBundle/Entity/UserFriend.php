@@ -1,8 +1,8 @@
 <?php
 /**
  * User: nikk
- * Date: 6/13/13
- * Time: 4:29 PM
+ * Date: 6/18/13
+ * Time: 4:16 PM
  */
 
 namespace Ps\AppBundle\Entity;
@@ -11,9 +11,9 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="place")
+ * @ORM\Table(name="user_friend")
  */
-class Place
+class UserFriend
 {
     /**
      * @ORM\Id
@@ -23,15 +23,15 @@ class Place
     protected $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
      */
-    protected $title;
+    protected $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity="City", inversedBy="places")
-     * @ORM\JoinColumn(name="city_id", referencedColumnName="id", nullable=false)
+     * @ORM\Column(type="string")
      */
-    protected $city;
+    protected $title;
 
     /**
      * Get id
@@ -47,19 +47,19 @@ class Place
      * Set title
      *
      * @param string $title
-     * @return Place
+     * @return UserFriend
      */
     public function setTitle($title)
     {
         $this->title = $title;
-
+    
         return $this;
     }
 
     /**
      * Get title
      *
-     * @return string
+     * @return string 
      */
     public function getTitle()
     {
@@ -67,25 +67,25 @@ class Place
     }
 
     /**
-     * Set city
+     * Set user
      *
-     * @param \Ps\AppBundle\Entity\City $city
-     * @return Place
+     * @param \Ps\AppBundle\Entity\User $user
+     * @return UserFriend
      */
-    public function setCity(\Ps\AppBundle\Entity\City $city = null)
+    public function setUser(\Ps\AppBundle\Entity\User $user)
     {
-        $this->city = $city;
+        $this->user = $user;
     
         return $this;
     }
 
     /**
-     * Get city
+     * Get user
      *
-     * @return \Ps\AppBundle\Entity\City 
+     * @return \Ps\AppBundle\Entity\User 
      */
-    public function getCity()
+    public function getUser()
     {
-        return $this->city;
+        return $this->user;
     }
 }

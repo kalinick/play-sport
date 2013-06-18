@@ -29,10 +29,21 @@ class EventMember
     protected $user;
 
     /**
+     * @ORM\ManyToOne(targetEntity="UserFriend")
+     * @ORM\JoinColumn(name="user_friend_id", referencedColumnName="id")
+     */
+    protected $userFriend;
+
+    /**
      * @ORM\ManyToOne(targetEntity="Event", inversedBy="eventMembers")
-     * @ORM\JoinColumn(name="event_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="event_id", referencedColumnName="id", nullable=false)
      */
     protected $event;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $participate;
 
     /**
      * Get id
@@ -88,5 +99,51 @@ class EventMember
     public function getEvent()
     {
         return $this->event;
+    }
+
+    /**
+     * Set participate
+     *
+     * @param integer $participate
+     * @return EventMember
+     */
+    public function setParticipate($participate)
+    {
+        $this->participate = $participate;
+    
+        return $this;
+    }
+
+    /**
+     * Get participate
+     *
+     * @return integer 
+     */
+    public function getParticipate()
+    {
+        return $this->participate;
+    }
+
+    /**
+     * Set userFriend
+     *
+     * @param \Ps\AppBundle\Entity\UserFriend $userFriend
+     * @return EventMember
+     */
+    public function setUserFriend(\Ps\AppBundle\Entity\UserFriend $userFriend = null)
+    {
+        $this->userFriend = $userFriend;
+    
+        return $this;
+    }
+
+    /**
+     * Get userFriend
+     *
+     * @return \Ps\AppBundle\Entity\UserFriend 
+     */
+    public function getUserFriend()
+    {
+        return $this->userFriend;
     }
 }

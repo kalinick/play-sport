@@ -1,0 +1,11 @@
+{% extends '::base.html.twig' %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('common/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('vendor/jquery-ui/jquery-ui-1.10.3.custom.min.css') }}">
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript" src="{{ asset('vendor/jquery-1.10.1.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('vendor/jquery-ui/jquery-ui-1.10.3.custom.min.js') }}"></script>
+{% endblock %}

@@ -29,7 +29,7 @@ class Event
 
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="events")
-     * @ORM\JoinColumn(name="organizer_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="organizer_id", referencedColumnName="id", nullable=false)
      */
     protected $organizer;
 
