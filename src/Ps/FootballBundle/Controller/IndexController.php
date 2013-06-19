@@ -11,15 +11,18 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
+use Ps\AppBundle\Controller\GetContainerTrait;
+
 class IndexController extends Controller
 {
+    use GetContainerTrait;
+
     /**
      * @Route("/", name="football_index")
      * @Template()
      */
     public function indexAction()
     {
-        $repository = $this->getDoctrine()->getRepository('PsAppBundle:Event');
-        return ['events' => $repository->findAll()];
+        return ['events' => $this->getEventManager()->getActualEvents()];
     }
 }

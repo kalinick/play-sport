@@ -11,6 +11,7 @@ use Doctrine\Bundle\DoctrineBundle\Registry;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 use Ps\AppBundle\Entity;
+use Ps\AppBundle\Repository;
 
 class EventManager extends EventModel
 {
@@ -20,7 +21,7 @@ class EventManager extends EventModel
     private $doctrine;
 
     /**
-     * @var \Doctrine\Common\Persistence\ObjectRepository
+     * @var Repository\EventRepository
      */
     private $repository;
 
@@ -43,5 +44,10 @@ class EventManager extends EventModel
         }
 
         throw new NotFoundHttpException('Not found event id ' . $id);
+    }
+
+    public function getActualEvents()
+    {
+        return $this->repository->findActualEvents();
     }
 }

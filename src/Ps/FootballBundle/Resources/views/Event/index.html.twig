@@ -1,31 +1,82 @@
 {% extends 'PsFootballBundle::base.html.twig' %}
 
-{% block body %}
-Учасники:
-<ul>
-    {% for eventMember in event.eventMembers %}
-    <li>
-        {{ eventMember.user.username }}
-    </li>
-    {% endfor %}
+{% block content %}
+<table border="2" style="float:right" cellpadding="10">
     {% if user.authorized %}
-        <input class="participate {% if user.subscribed %}hidden{% endif %}" type="button" data-val="1" value="Прийму участие"/>
-        <input class="participate {% if not user.subscribed %}hidden{% endif %}" type="button" data-val="0" value="Не прийму участие"/>
+    <tr>
+        <td>
+            <form action="{{ url('football_event_participate_user', {'id': event.id}) }}" method="post">
+                <div>Я, {{ app.user.username }}</div>
+                <input id="participate-user" type="submit" name="participate" value="Приму участие"/>
+                <input id="unparticipate-user" type="submit" name="unparticipate" value="Не приму участие"/>
+            </form>
+        </td>
+    </tr>
     {% endif %}
-</ul>
+    <tr>
+        <td>
+            <form action="{{ url('football_event_participate_friend', {'id': event.id}) }}" method="post">
+                <div>
+                    <label for="participate">Введите имя учасника:</label><input id="participate" type="text" name="title" required="required"/>
+                </div>
+                <br>
+                <div>
+                    <input id="participate-friend" type="submit" name="participate" value="Примет участие"/>
+                    <input id="unparticipate-friend" type="submit" name="unparticipate" value="Не примет участие"/>
+                </div>
+            </form>
+        </td>
+    </tr>
+</table>
+<table border="2" style="float:left" cellpadding="10">
+    <tr>
+        <th>Примет</th>
+        <th>Не примет</th>
+    </tr>
+    <tr valign="top">
+        <td>
+            <ul>
+                {% for eventMember in event.eventMembers %}
+                    {% if eventMember.participate %}
+                    <li>
+                        {{ eventMember.name }}
+                    </li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </td>
+        <td>
+            <ul>
+                {% for eventMember in event.eventMembers %}
+                    {% if not eventMember.participate %}
+                        <li>
+                            {{ eventMember.name }}
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </td>
+    </tr>
+    <tr>
+        <td>{{ metric.part }}</td>
+        <td>{{ metric.unpart }}</td>
+    </tr>
+</table>
+
+
 {% endblock%}
 
 {% block javascripts %}
     {{ parent() }}
 <script type="text/javascript">
 $(function() {
-    $('.participate').button().click(function(){
-        $.ajax({
-            url: "{{ url('football_event_participate_user', {'id': event.id}) }}",
-            type: "POST",
-            data: {'participate': $(this).data('val')}
-        }).done(function(){$('.participate').toggleClass('hidden')});
-    });
+    $('#participate-user').button({% if user.exist and user.participate %}{ disabled: true }{% endif %});
+    $('#unparticipate-user').button({% if user.exist and not user.participate %}{ disabled: true }{% endif %});
+    $('#participate-friend').button();
+    $('#unparticipate-friend').button();
+
+    var friends = [{{ user.friends|raw }}];
+    $('#participate').autocomplete({source: friends});
 });
 </script>
 {% endblock %}

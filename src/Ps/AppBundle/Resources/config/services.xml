@@ -8,6 +8,7 @@
     <parameters>
         <parameter key="ps_app.event_manager.class">Ps\AppBundle\Model\EventManager</parameter>
         <parameter key="ps_app.event_member_manager.class">Ps\AppBundle\Model\EventMemberManager</parameter>
+        <parameter key="ps_app.user_friend_manager.class">Ps\AppBundle\Model\UserFriendManager</parameter>
     </parameters>
 
     <services>
@@ -16,6 +17,13 @@
         </service>
 
         <service id="ps_app.event_member_manager" class="%ps_app.event_member_manager.class%">
+            <argument type="service" id="doctrine" />
+            <call method="setUserFriendManager">
+                <argument type='service' id='ps_app.user_friend_manager' />
+            </call>
+        </service>
+
+        <service id="ps_app.user_friend_manager" class="%ps_app.user_friend_manager.class%">
             <argument type="service" id="doctrine" />
         </service>
     </services>

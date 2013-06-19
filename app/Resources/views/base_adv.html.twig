@@ -1,8 +1,30 @@
 {% extends '::base.html.twig' %}
 
 {% block stylesheets %}
-    <link rel="stylesheet" href="{{ asset('common/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('common/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('vendor/jquery-ui/jquery-ui-1.10.3.custom.min.css') }}">
+{% endblock %}
+
+{% block body %}
+<div id="wrap">
+    {% block header %}<div id="header"></div>{% endblock %}
+    {% block menu %}
+        <div id="menu">
+            <div id="user-info">
+                {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                    {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
+                    <a href="{{ path('fos_user_security_logout') }}">
+                        {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
+                    </a>
+                {% else %}
+                    <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
+                    <a href="{{ url('fos_user_registration_register') }}">{{ 'layout.register'|trans({}, 'FOSUserBundle') }}</a>
+                {% endif %}
+            </div>
+        </div>
+    {% endblock %}
+    <div id="content">{% block content %}{% endblock %}</div>
+</div>
 {% endblock %}
 
 {% block javascripts %}

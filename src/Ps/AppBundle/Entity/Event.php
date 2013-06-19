@@ -10,7 +10,7 @@ namespace Ps\AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Ps\AppBundle\Repository\EventRepository")
  * @ORM\Table(name="event")
  */
 class Event
@@ -34,12 +34,12 @@ class Event
     protected $organizer;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="integer")
      */
     protected $dateStart;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="integer")
      */
     protected $dateEnd;
 
@@ -84,7 +84,7 @@ class Event
     /**
      * Set dateStart
      *
-     * @param \DateTime $dateStart
+     * @param integer $dateStart
      * @return Event
      */
     public function setDateStart($dateStart)
@@ -97,7 +97,7 @@ class Event
     /**
      * Get dateStart
      *
-     * @return \DateTime 
+     * @return integer
      */
     public function getDateStart()
     {
@@ -107,7 +107,7 @@ class Event
     /**
      * Set dateEnd
      *
-     * @param \DateTime $dateEnd
+     * @param integer $dateEnd
      * @return Event
      */
     public function setDateEnd($dateEnd)
@@ -120,7 +120,7 @@ class Event
     /**
      * Get dateEnd
      *
-     * @return \DateTime 
+     * @return integer
      */
     public function getDateEnd()
     {

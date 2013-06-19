@@ -41,6 +41,11 @@ class EventMember
     protected $event;
 
     /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $title;
+
+    /**
      * @ORM\Column(type="integer")
      */
     protected $participate;
@@ -145,5 +150,46 @@ class EventMember
     public function getUserFriend()
     {
         return $this->userFriend;
+    }
+
+    /**
+     * Set title
+     *
+     * @param string $title
+     * @return EventMember
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+    
+        return $this;
+    }
+
+    /**
+     * Get title
+     *
+     * @return string 
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * Return the name of member
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        if ($this->getUser()) {
+            return $this->getUser()->getUsername();
+        } else {
+            if ($this->getUserFriend()) {
+                return $this->getUserFriend()->getTitle();
+            } else {
+                return $this->title;
+            }
+        }
     }
 }

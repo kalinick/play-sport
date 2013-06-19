@@ -1,0 +1,14 @@
+.hidden {
+    display: none !important;
+}
+
+body {
+    background-color: #F5F3E5;
+    color: #000000;
+    margin: 0;
+}
+
+#wrap {
+    margin: 0 auto;
+    width: 940px;
+}

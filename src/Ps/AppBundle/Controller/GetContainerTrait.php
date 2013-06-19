@@ -35,5 +35,13 @@ trait GetContainerTrait
         return $this->get('ps_app.event_member_manager');
     }
 
+    /**
+     * @return Model\UserFriendManager
+     */
+    protected function getUserFriendManager()
+    {
+        return $this->get('ps_app.user_friend_manager');
+    }
+
     protected abstract function get();
 }
