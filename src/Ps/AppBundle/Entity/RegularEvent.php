@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass="Ps\AppBundle\Repository\EventRepository")
  * @ORM\Table(name="event")
  */
-class Event
+class RegularEvent
 {
     /**
      * @ORM\Id
