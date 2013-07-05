@@ -43,5 +43,5 @@ trait GetContainerTrait
         return $this->get('ps_app.user_friend_manager');
     }
 
-    protected abstract function get();
+    protected abstract function get($id);
 }
