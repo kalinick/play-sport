@@ -17,16 +17,6 @@ class EventData extends AbstractFixture implements OrderedFixtureInterface
 {
     public function load(ObjectManager $manager)
     {
-        $eventOckb = new Event();
-        $eventOckb->setTitle('Спорт комплекс возле ОЦКБ Понедельник');
-        $eventOckb->setDateStart(new \DateTime('17.06.2013 19:30:00'));
-        $eventOckb->setDateEnd(new \DateTime('17.06.2013 21:00:00'));
-        $eventOckb->setOrganizer($this->getReference('super-admin'));
-
-        $manager->persist($eventOckb);
-
-        $manager->flush();
-
     }
 
     public function getOrder()

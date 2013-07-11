@@ -10,8 +10,8 @@ namespace Ps\AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="Ps\AppBundle\Repository\EventRepository")
- * @ORM\Table(name="event")
+ * @ORM\Entity(repositoryClass="Ps\AppBundle\Repository\RegularEventRepository")
+ * @ORM\Table(name="regular_event")
  */
 class RegularEvent
 {
@@ -34,12 +34,170 @@ class RegularEvent
     protected $organizer;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="string", length=3, nullable=false)
      */
-    protected $dateStart;
+    protected $dayStart;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="string", length=5, nullable=false)
      */
-    protected $dateEnd;
+    protected $timeStart;
+
+    /**
+     * @ORM\Column(type="string", length=3, nullable=false)
+     */
+    protected $dayEnd;
+
+    /**
+     * @ORM\Column(type="string", length=5, nullable=false)
+     */
+    protected $timeEnd;
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set title
+     *
+     * @param string $title
+     * @return RegularEvent
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+    
+        return $this;
+    }
+
+    /**
+     * Get title
+     *
+     * @return string 
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * Set dayStart
+     *
+     * @param string $dayStart
+     * @return RegularEvent
+     */
+    public function setDayStart($dayStart)
+    {
+        $this->dayStart = $dayStart;
+    
+        return $this;
+    }
+
+    /**
+     * Get dayStart
+     *
+     * @return string 
+     */
+    public function getDayStart()
+    {
+        return $this->dayStart;
+    }
+
+    /**
+     * Set timeStart
+     *
+     * @param string $timeStart
+     * @return RegularEvent
+     */
+    public function setTimeStart($timeStart)
+    {
+        $this->timeStart = $timeStart;
+    
+        return $this;
+    }
+
+    /**
+     * Get timeStart
+     *
+     * @return string 
+     */
+    public function getTimeStart()
+    {
+        return $this->timeStart;
+    }
+
+    /**
+     * Set dayEnd
+     *
+     * @param string $dayEnd
+     * @return RegularEvent
+     */
+    public function setDayEnd($dayEnd)
+    {
+        $this->dayEnd = $dayEnd;
+    
+        return $this;
+    }
+
+    /**
+     * Get dayEnd
+     *
+     * @return string 
+     */
+    public function getDayEnd()
+    {
+        return $this->dayEnd;
+    }
+
+    /**
+     * Set timeEnd
+     *
+     * @param string $timeEnd
+     * @return RegularEvent
+     */
+    public function setTimeEnd($timeEnd)
+    {
+        $this->timeEnd = $timeEnd;
+    
+        return $this;
+    }
+
+    /**
+     * Get timeEnd
+     *
+     * @return string 
+     */
+    public function getTimeEnd()
+    {
+        return $this->timeEnd;
+    }
+
+    /**
+     * Set organizer
+     *
+     * @param \Ps\AppBundle\Entity\User $organizer
+     * @return RegularEvent
+     */
+    public function setOrganizer(\Ps\AppBundle\Entity\User $organizer)
+    {
+        $this->organizer = $organizer;
+    
+        return $this;
+    }
+
+    /**
+     * Get organizer
+     *
+     * @return \Ps\AppBundle\Entity\User 
+     */
+    public function getOrganizer()
+    {
+        return $this->organizer;
+    }
 }

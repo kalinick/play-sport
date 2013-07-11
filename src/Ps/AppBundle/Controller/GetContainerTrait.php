@@ -28,6 +28,14 @@ trait GetContainerTrait
     }
 
     /**
+     * @return Model\RegularEventManager
+     */
+    protected function getRegularEventManager()
+    {
+        return $this->get('ps_app.regular_event_manager');
+    }
+
+    /**
      * @return Model\EventMemberManager
      */
     protected function getEventMemberManager()

@@ -1,0 +1,13 @@
+#header {
+    background: url(../images/header.png) repeat scroll 0 0 transparent;
+    height: 198px;
+    width: 940px;
+}
+
+#user-info {
+    float: right;
+}
+
+#content {
+    clear: both;
+}

@@ -8,10 +8,13 @@
 namespace Ps\AppBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
-use Symfony\Component\Validator\Constraints\DateTime;
 
 class EventRepository extends EntityRepository
 {
+    /**
+     * Find events, that did not happened
+     * @return array
+     */
     public function findActualEvents()
     {
         return $this
