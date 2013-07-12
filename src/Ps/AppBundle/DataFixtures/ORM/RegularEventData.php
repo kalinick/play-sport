@@ -18,7 +18,7 @@ class RegularEventData extends AbstractFixture implements OrderedFixtureInterfac
     public function load(ObjectManager $manager)
     {
         $eventOckb = new RegularEvent();
-        $eventOckb->setTitle('Спорт комплекс возле ОЦКБ Понедельник');
+        $eventOckb->setTitle('Спорт комплекс возле ОЦКБ');
         $eventOckb->setOrganizer($this->getReference('super-admin'));
         $eventOckb->setDayStart('Mon');
         $eventOckb->setTimeStart('19:30');

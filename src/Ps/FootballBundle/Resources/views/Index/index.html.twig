@@ -1,10 +1,16 @@
 {% extends 'PsFootballBundle::base.html.twig' %}
 
 {% block content %}
-<div>События :</div>
-<ul>
+{{ parent() }}
+<ul class="event-list">
     {% for event in events %}
-        <li><a href="{{ url('football_event_index', {'id': event.id}) }}">{{ event.title }}: {{ event.dateStart|date('m-d H:i') }} - {{ event.dateEnd|date('m-d H:i') }}</a></li>
+        <li>
+            <img src="{{ asset('bundles/psfootball/images/ockb.png') }}"/>
+            <h3>{{ event.title }}</h3>
+            <p><span class="date-caption-block">Начало:</span> {{ event.dateStart|date('H:i, l (d.m)') }}</p>
+            <p><span class="date-caption-block">Конец:</span> {{ event.dateEnd|date('H:i, l (d.m)') }}</p>
+            <a class="more" href="{{ url('football_event_index', {'id': event.id}) }}">подробнее</a>
+        </li>
     {% endfor %}
 </ul>
 {% endblock %}
