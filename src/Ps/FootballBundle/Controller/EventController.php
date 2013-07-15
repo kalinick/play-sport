@@ -7,16 +7,16 @@
 
 namespace Ps\FootballBundle\Controller;
 
+use Ps\AppBundle\Classes\CookiesAnonymousEventMember;
 use Ps\AppBundle\Model\EventMemberModel;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
-use Ps\AppBundle\Entity\EventMember;
 use Ps\AppBundle\Controller\GetContainerTrait;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 class EventController extends Controller
 {
@@ -30,13 +30,24 @@ class EventController extends Controller
     {
         $oEvent = $this->getEventManager()->getEventById($id);
 
-        $user = ['friends' => '', 'exist' => false];
+        $user = ['friends' => ''];
         $user['authorized'] = $this->getSecurityContext()->isGranted('ROLE_USER');
-        if ($this->getSecurityContext()->isGranted('ROLE_USER')) {
+        if ($user['authorized']) {
             $oUser = $this->getSecurityContext()->getToken()->getUser();
             $user['exist'] = $this->getEventMemberManager()->isUserExist($oEvent, $oUser);
             $user['participate'] = $this->getEventMemberManager()->isUserParticipate($oEvent, $oUser);
             $user['friends'] = $this->friendsToString($this->getUserFriendManager()->getFriends($oUser));
+        } else {
+            $anonymousId = (new CookiesAnonymousEventMember($id))->get($this->getRequest()->cookies);
+            if ($anonymousId) {
+                $user['exist'] = true;
+                $anonymousMember = $this->getEventMemberManager()->getAnonymousMemberById($anonymousId);
+                $user['anonymous'] = $anonymousMember;
+                $user['participate'] = $anonymousMember->getParticipate();
+            } else {
+                $user['exist'] = false;
+                $user['participate'] = false;
+            }
         }
         $metric = ['part' => 0, 'unpart' => 0];
 
@@ -102,9 +113,17 @@ class EventController extends Controller
             $oUser = $this->getSecurityContext()->getToken()->getUser();
             $this->getEventMemberManager()->participateUserFriend($oEvent, $oUser, $title, $participate);
         } else {
-            $this->getEventMemberManager()->participateAnonymous($oEvent, $title, $participate);
+            $anonymousId = (new CookiesAnonymousEventMember($id))->get($this->getRequest()->cookies);
+            $oAnonymousEM = $this->getEventMemberManager()->participateAnonymous($oEvent, $anonymousId, $title, $participate);
         }
 
-        return new RedirectResponse($this->generateUrl('football_event_index', ['id' => $id]));
+        $oResponse = new RedirectResponse($this->generateUrl('football_event_index', ['id' => $id]));
+
+        if (isset($oAnonymousEM)) {
+            $cookieAnonymousEM = new CookiesAnonymousEventMember($id);
+            $oResponse->headers->setCookie($cookieAnonymousEM->createCookies($oAnonymousEM->getId()));
+        }
+
+        return $oResponse;
     }
 }

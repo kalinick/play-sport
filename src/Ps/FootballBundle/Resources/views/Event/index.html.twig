@@ -1,7 +1,7 @@
 {% extends 'PsFootballBundle::base.html.twig' %}
 
 {% block content %}
-<table border="2" style="float:right" cellpadding="10">
+<table border="2" style="float:left" cellpadding="10">
     {% if user.authorized %}
     <tr>
         <td>
@@ -12,7 +12,6 @@
             </form>
         </td>
     </tr>
-    {% endif %}
     <tr>
         <td>
             <form action="{{ url('football_event_participate_friend', {'id': event.id}) }}" method="post">
@@ -27,25 +26,45 @@
             </form>
         </td>
     </tr>
-</table>
-<table border="2" style="float:left" cellpadding="10">
+    {% else %}
     <tr>
-        <th>Примет</th>
-        <th>Не примет</th>
-    </tr>
-    <tr valign="top">
         <td>
+            <form action="{{ url('football_event_participate_friend', {'id': event.id}) }}" method="post">
+                <div>
+                    <label for="participate">Введите ваше имя:</label>
+                    <input id="participate" {% if user.anonymous is defined %}value="{{ user.anonymous.title }}"{% endif %} type="text" name="title" required="required"/>
+                </div>
+                <br>
+                <div>
+                    <input id="participate-friend" type="submit" name="participate" value="Приму участие"/>
+                    <input id="unparticipate-friend" type="submit" name="unparticipate" value="Не приму участие"/>
+                </div>
+            </form>
+        </td>
+    </tr>
+    {% endif %}
+</table>
+
+<div class="members">
+    <div class="header">
+        <div class="part">Участвует</div>
+        <div class="separator"></div>
+        <div class="not-part">Не участвует</div>
+    </div>
+    <div class="body">
+        <div class="part">
             <ul>
                 {% for eventMember in event.eventMembers %}
                     {% if eventMember.participate %}
-                    <li>
-                        {{ eventMember.name }}
-                    </li>
+                        <li>
+                            {{ eventMember.name }}
+                        </li>
                     {% endif %}
                 {% endfor %}
             </ul>
-        </td>
-        <td>
+        </div>
+        <div class="separator"></div>
+        <div class="not-part">
             <ul>
                 {% for eventMember in event.eventMembers %}
                     {% if not eventMember.participate %}
@@ -55,14 +74,18 @@
                     {% endif %}
                 {% endfor %}
             </ul>
-        </td>
-    </tr>
-    <tr>
-        <td>{{ metric.part }}</td>
-        <td>{{ metric.unpart }}</td>
-    </tr>
-</table>
+        </div>
+    </div>
+    <div class="footer">
+        <div class="part">{{ metric.part }}</div>
+        <div class="separator"></div>
+        <div class="not-part">{{ metric.unpart }}</div>
+    </div>
+</div>
 
+<div class="action">
+    <div></div>
+</div>
 
 {% endblock%}
 

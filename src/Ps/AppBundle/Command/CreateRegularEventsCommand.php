@@ -28,7 +28,7 @@ class CreateRegularEventsCommand extends ContainerAwareCommand
                 'day',
                 InputArgument::OPTIONAL,
                 'Enter the day of the report',
-                date('D')
+                date('D', strtotime('-1 day'))
             )
         ;
     }

@@ -140,18 +140,56 @@ class EventMemberManager extends EventMemberModel
 
     /**
      * @param Entity\Event $oEvent
+     * @param $anonymousId
      * @param $title
      * @param $participate
+     * @return Entity\EventMember
      */
-    public function participateAnonymous(Entity\Event $oEvent, $title, $participate)
+    public function participateAnonymous(Entity\Event $oEvent, $anonymousId, $title, $participate)
     {
-        $oEventMember = new Entity\EventMember();
-        $oEventMember->setEvent($oEvent);
-        $oEventMember->setTitle($title);
-        $oEventMember->setParticipate($participate);
-
         $manager = $this->doctrine->getManager();
-        $manager->persist($oEventMember);
+
+        if ($anonymousId !== null) {
+            $oEventMember = $this->getAnonymousMemberById($anonymousId);
+        }
+
+        if (!empty($oEventMember)) {
+            if (!empty($title)) {
+                $oEventMember->setTitle($title);
+            }
+        } else {
+            $oEventMember = new Entity\EventMember();
+            $oEventMember->setEvent($oEvent);
+            $oEventMember->setTitle($title);
+            $manager->persist($oEventMember);
+        }
+
+        $oEventMember->setParticipate($participate);
         $manager->flush();
+
+        return $oEventMember;
+    }
+
+    /**
+     * @param int $id
+     * @return Entity\EventMember
+     */
+    public function getMemberById($id)
+    {
+        return $this->repository->find($id);
+    }
+
+    /**
+     * @param $anonymousId
+     * @return Entity\EventMember
+     * @throws \Symfony\Component\HttpKernel\Exception\ConflictHttpException
+     */
+    public function getAnonymousMemberById($anonymousId)
+    {
+        $oMember = $this->getMemberById($anonymousId);
+        if ($oMember->getUser() !== null || $oMember->getUserFriend() !== null) {
+            throw new ConflictHttpException();
+        }
+        return $oMember;
     }
 }

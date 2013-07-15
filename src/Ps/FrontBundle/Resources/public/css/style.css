@@ -233,3 +233,78 @@ ul.event-list li a.more:hover{
     color: #FFFFFF;
     text-shadow: 1px 1px #303030;
 }
+
+.container {
+    color: #333333;
+}
+
+.members {
+    min-width: 400px;
+    display: table;
+    float: right;
+}
+
+.members .header, .members .footer {
+    font-size: 20px;
+    text-align: center;
+    height: 40px;
+}
+.members .header {
+    display: table-header-group;
+}
+
+.members .footer {
+    display: table-footer-group;
+}
+
+.members .header div, .members .footer div {
+    padding-top: 10px;
+    display: table-cell;
+    min-width: 200px;
+}
+
+.members .header div {
+    border-radius: 4px 4px 0 0;
+}
+
+.members .footer div {
+    border-radius: 0 0 4px 4px;
+}
+
+.members .header .part, .members .footer .part {
+    background: url("../images/green_bg.gif") repeat-x scroll 0 0 transparent;
+}
+
+.members .header .not-part, .members .footer .not-part {
+    background: url("../images/orange_bg.gif") repeat-x scroll 0 0 transparent;
+}
+
+.members .body {
+    display: table-row-group;
+}
+
+.members .body div{
+    display: table-cell;
+    min-width: 200px;
+    background: none repeat scroll 0 0 #404040;
+}
+
+.members ul {
+    list-style: none outside none;
+    padding: 0;
+    margin: 0;
+    color: #FFFFFF;
+}
+
+.members ul li {
+    border-bottom: 1px solid #737373;
+    font: 15px/32px 'DroidSerifRegular',Arial,Helvetica,sans-serif;
+    padding: 0;
+    text-align: center;
+}
+
+.members div div.separator {
+    width: 10px;
+    min-width: 10px;
+    background-color: transparent;
+}
