@@ -299,7 +299,7 @@ ul.event-list li a.more:hover{
 .members ul li {
     border-bottom: 1px solid #737373;
     font: 15px/32px 'DroidSerifRegular',Arial,Helvetica,sans-serif;
-    padding: 0;
+    padding: 0 5px;
     text-align: center;
 }
 

@@ -1,7 +1,7 @@
 {% extends 'PsFootballBundle::base.html.twig' %}
 
 {% block content %}
-<table border="2" style="float:left" cellpadding="10">
+<table border="0" style="float:left" cellpadding="10">
     {% if user.authorized %}
     <tr>
         <td>
@@ -81,10 +81,6 @@
         <div class="separator"></div>
         <div class="not-part">{{ metric.unpart }}</div>
     </div>
-</div>
-
-<div class="action">
-    <div></div>
 </div>
 
 {% endblock%}
