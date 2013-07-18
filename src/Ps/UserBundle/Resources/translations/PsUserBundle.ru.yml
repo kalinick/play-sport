@@ -1,0 +1,7 @@
+form:
+    first_name: Имя:
+    last_name: Фамилия:
+    phone: Телефон:
+    city: Город:
+
+donetsk: Донецк

@@ -1,4 +1,5 @@
 {% extends 'PsFootballBundle::base.html.twig' %}
+{% trans_default_domain 'PsFrontBundle' %}
 
 {% block content %}
 {{ parent() }}
@@ -7,9 +8,11 @@
         <li>
             <img src="{{ asset('bundles/psfootball/images/ockb.png') }}"/>
             <h3>{{ event.title }}</h3>
-            <p><span class="date-caption-block">Начало:</span> {{ event.dateStart|date('H:i, l (d.m)') }}</p>
-            <p><span class="date-caption-block">Конец:</span> {{ event.dateEnd|date('H:i, l (d.m)') }}</p>
-            <a class="more" href="{{ url('football_event_index', {'id': event.id}) }}">подробнее</a>
+            <p><span class="date-caption-block">{{ 'events.start'|trans }} :</span>
+                {{ event.dateStart|date('H:i') }}, {{ event.dateStart|date('l')|trans({}, 'PsAppBundle') }} {{ event.dateStart|date('(d.m)') }}</p>
+            <p><span class="date-caption-block">{{ 'events.end'|trans }} :</span>
+                {{ event.dateEnd|date('H:i') }}, {{ event.dateEnd|date('l')|trans({}, 'PsAppBundle') }} {{ event.dateEnd|date('(d.m)') }}</p>
+            <a class="more" href="{{ url('football_event_index', {'id': event.id}) }}">{{ 'events.more'|trans }}</a>
         </li>
     {% endfor %}
 </ul>

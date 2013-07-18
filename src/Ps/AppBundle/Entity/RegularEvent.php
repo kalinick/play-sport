@@ -20,38 +20,38 @@ class RegularEvent
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $id;
+    private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    protected $title;
+    private $title;
 
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="regularEvents")
      * @ORM\JoinColumn(name="organizer_id", referencedColumnName="id", nullable=false)
      */
-    protected $organizer;
+    private $organizer;
 
     /**
      * @ORM\Column(type="string", length=3, nullable=false)
      */
-    protected $dayStart;
+    private $dayStart;
 
     /**
      * @ORM\Column(type="string", length=5, nullable=false)
      */
-    protected $timeStart;
+    private $timeStart;
 
     /**
      * @ORM\Column(type="string", length=3, nullable=false)
      */
-    protected $dayEnd;
+    private $dayEnd;
 
     /**
      * @ORM\Column(type="string", length=5, nullable=false)
      */
-    protected $timeEnd;
+    private $timeEnd;
 
     /**
      * Get id

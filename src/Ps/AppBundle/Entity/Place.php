@@ -20,18 +20,18 @@ class Place
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $id;
+    private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    protected $title;
+    private $title;
 
     /**
      * @ORM\ManyToOne(targetEntity="City", inversedBy="places")
      * @ORM\JoinColumn(name="city_id", referencedColumnName="id", nullable=false)
      */
-    protected $city;
+    private $city;
 
     /**
      * Get id

@@ -68,3 +68,6 @@ fos_user:
     db_driver: orm
     firewall_name: main
     user_class: Ps\AppBundle\Entity\User
+    registration:
+        form:
+            type: ps_user_registration

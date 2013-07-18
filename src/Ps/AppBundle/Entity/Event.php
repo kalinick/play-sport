@@ -20,33 +20,33 @@ class Event
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $id;
+    private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    protected $title;
+    private $title;
 
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="events")
      * @ORM\JoinColumn(name="organizer_id", referencedColumnName="id", nullable=false)
      */
-    protected $organizer;
+    private $organizer;
 
     /**
      * @ORM\Column(type="integer")
      */
-    protected $dateStart;
+    private $dateStart;
 
     /**
      * @ORM\Column(type="integer")
      */
-    protected $dateEnd;
+    private $dateEnd;
 
     /**
      * @ORM\OneToMany(targetEntity="EventMember", mappedBy="event")
      */
-    protected $eventMembers;
+    private $eventMembers;
 
     /**
      * Get id

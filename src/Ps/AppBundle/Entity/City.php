@@ -20,22 +20,22 @@ class City
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $id;
+    private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    protected $title;
+    private $title;
 
     /**
      * @ORM\OneToMany(targetEntity="Place", mappedBy="city")
      */
-    protected $places;
+    private $places;
 
     /**
      * @ORM\OneToMany(targetEntity="User", mappedBy="city")
      */
-    protected $users;
+    private $users;
     /**
      * Constructor
      */

@@ -9,6 +9,7 @@ namespace Ps\AppBundle\Entity;
 
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
@@ -24,20 +25,55 @@ class User extends BaseUser
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="City", inversedBy="users")
-     * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
+     * @ORM\Column(type="string", length=63, nullable=true)
+     * @Assert\Length(
+     *      min = "2",
+     *      max = "63",
+     *      minMessage = "entity.user.first_name.short",
+     *      maxMessage = "entity.user.first_name.long",
+     *      groups={"Registration", "Profile"}
+     * )
      */
-    protected $city;
+    private $firstName;
+
+    /**
+     * @ORM\Column(type="string", length=63, nullable=true)
+     * @Assert\Length(
+     *      min = "2",
+     *      max = "63",
+     *      minMessage = "entity.user.last_name.short",
+     *      maxMessage = "entity.user.last_name.long",
+     *      groups={"Registration", "Profile"}
+     * )
+     */
+    private $lastName;
+
+    /**
+     * @ORM\Column(type="string", length=15, nullable=true)
+     * @Assert\Regex(
+     *     pattern="/^\d{10,15}$/",
+     *     message="entity.user.phone.invalid",
+     *     groups={"Registration", "Profile"}
+     * )
+     */
+    private $phone;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="City", inversedBy="users")
+     * @ORM\JoinColumn(name="city_id", referencedColumnName="id", nullable=false)
+     * @Assert\NotBlank()
+     */
+    private $city;
 
     /**
      * @ORM\OneToMany(targetEntity="Event", mappedBy="organizer")
      */
-    protected $events;
+    private $events;
 
     /**
      * @ORM\OneToMany(targetEntity="UserFriend", mappedBy="user")
      */
-    protected $userFriends;
+    private $userFriends;
 
     public function __construct()
     {
@@ -144,5 +180,74 @@ class User extends BaseUser
     public function getUserFriends()
     {
         return $this->userFriends;
+    }
+
+    /**
+     * Set firstName
+     *
+     * @param string $firstName
+     * @return User
+     */
+    public function setFirstName($firstName)
+    {
+        $this->firstName = $firstName;
+    
+        return $this;
+    }
+
+    /**
+     * Get firstName
+     *
+     * @return string 
+     */
+    public function getFirstName()
+    {
+        return $this->firstName;
+    }
+
+    /**
+     * Set lastName
+     *
+     * @param string $lastName
+     * @return User
+     */
+    public function setLastName($lastName)
+    {
+        $this->lastName = $lastName;
+    
+        return $this;
+    }
+
+    /**
+     * Get lastName
+     *
+     * @return string 
+     */
+    public function getLastName()
+    {
+        return $this->lastName;
+    }
+
+    /**
+     * Set phone
+     *
+     * @param string $phone
+     * @return User
+     */
+    public function setPhone($phone)
+    {
+        $this->phone = $phone;
+    
+        return $this;
+    }
+
+    /**
+     * Get phone
+     *
+     * @return string 
+     */
+    public function getPhone()
+    {
+        return $this->phone;
     }
 }

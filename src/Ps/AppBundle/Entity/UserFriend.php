@@ -20,18 +20,18 @@ class UserFriend
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $id;
+    private $id;
 
     /**
      * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
      */
-    protected $user;
+    private $user;
 
     /**
      * @ORM\Column(type="string")
      */
-    protected $title;
+    private $title;
 
     /**
      * Get id

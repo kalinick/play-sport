@@ -1,0 +1,10 @@
+entity:
+    user:
+        first_name:
+            short: Your first name is too short
+            long: Your first name is too long
+        last_name:
+            short: Your last name is too short
+            long: Your last name is too long
+        phone:
+            invalid: Phone number is incorrect. It must consist only digits.

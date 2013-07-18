@@ -1,0 +1,17 @@
+main:
+    do_sport: Занимайся спортом!
+    main: Главная
+    football: Футбол
+
+events:
+    closest_event: Ближайшие события
+    more: Подробнее
+    start: Начало
+    end: Конец
+
+event:
+    input_your_name: Введите ваше имя
+    i_will_participate: Приму участие
+    i_will_not_participate: Не приму участие
+    participate: Участвует
+    not_participate: Не участвует

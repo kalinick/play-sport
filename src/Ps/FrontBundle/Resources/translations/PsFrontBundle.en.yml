@@ -1,0 +1,17 @@
+main:
+    do_sport: Do sport!
+    main: Main
+    football: Football
+
+events:
+    closest_event: Closest events
+    more: More
+    start: Start
+    end: End
+
+event:
+    input_your_name: Input your name
+    i_will_participate: I will participate
+    i_will_not_participate: I will not participate
+    participate: Participate
+    not_participate: Not participate

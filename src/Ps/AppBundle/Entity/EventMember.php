@@ -20,35 +20,35 @@ class EventMember
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $id;
+    private $id;
 
     /**
      * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
-    protected $user;
+    private $user;
 
     /**
      * @ORM\ManyToOne(targetEntity="UserFriend")
      * @ORM\JoinColumn(name="user_friend_id", referencedColumnName="id")
      */
-    protected $userFriend;
+    private $userFriend;
 
     /**
      * @ORM\ManyToOne(targetEntity="Event", inversedBy="eventMembers")
      * @ORM\JoinColumn(name="event_id", referencedColumnName="id", nullable=false)
      */
-    protected $event;
+    private $event;
 
     /**
      * @ORM\Column(type="string", nullable=true)
      */
-    protected $title;
+    private $title;
 
     /**
      * @ORM\Column(type="integer")
      */
-    protected $participate;
+    private $participate;
 
     /**
      * Get id
@@ -183,6 +183,11 @@ class EventMember
     public function getName()
     {
         if ($this->getUser()) {
+            $name = $this->getUser()->getFirstName() . ' ' . $this->getUser()->getLastName();
+            if (strlen(trim($name)) > 0) {
+                return $name;
+            }
+
             return $this->getUser()->getUsername();
         } else {
             if ($this->getUserFriend()) {
