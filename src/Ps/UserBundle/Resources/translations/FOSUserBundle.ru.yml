@@ -1,0 +1,18 @@
+form:
+    first_name: Имя:
+    last_name: Фамилия:
+    phone: Телефон:
+    city: Город:
+
+login:
+    please_sing_in: Логин
+
+registration:
+    register: Регистрация
+
+security:
+    login:
+        login: Логин
+        pass: Пароль
+
+donetsk: Донецк

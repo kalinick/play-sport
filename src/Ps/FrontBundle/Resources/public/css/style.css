@@ -137,7 +137,7 @@ body {
 }
 
 #main {
-    background: url("../images/main-top-tail.jpg") repeat-x scroll center top transparent;
+    background: url("../images/main-top-tail.jpg") repeat-x scroll center top #EBEAD8;
     padding-top: 18px;
     min-height: 650px;
 }

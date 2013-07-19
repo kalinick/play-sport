@@ -1,0 +1,20 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block fos_user_content %}
+    <div class="registration-block">
+        <h2>{{ 'registration.register' | trans }}</h2>
+        {% include "FOSUserBundle:Registration:register_content.html.twig" %}
+    </div>
+    <div>&nbsp;</div>
+{% endblock fos_user_content %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $(function() {
+            $( ".registration-block input[type='submit']" ).button();
+        });
+    </script>
+{% endblock %}

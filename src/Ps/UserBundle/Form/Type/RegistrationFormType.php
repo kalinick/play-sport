@@ -17,14 +17,14 @@ class RegistrationFormType extends BaseType
         parent::buildForm($builder, $options);
 
         $builder
-            ->add('firstName', null, ['label' => 'form.first_name', 'required' => false, 'translation_domain' => 'PsUserBundle'])
-            ->add('lastName', null, ['label' => 'form.last_name', 'required' => false, 'translation_domain' => 'PsUserBundle'])
-            ->add('phone', null, ['label' => 'form.phone', 'required' => false, 'translation_domain' => 'PsUserBundle'])
+            ->add('firstName', null, ['label' => 'form.first_name', 'required' => false, 'translation_domain' => 'FOSUserBundle'])
+            ->add('lastName', null, ['label' => 'form.last_name', 'required' => false, 'translation_domain' => 'FOSUserBundle'])
+            ->add('phone', null, ['label' => 'form.phone', 'required' => false, 'translation_domain' => 'FOSUserBundle'])
             ->add('city', null, [
                 'label' => 'form.city',
                 'class' => 'PsAppBundle:City',
                 'property' => 'title',
-                'translation_domain' => 'PsUserBundle'
+                'translation_domain' => 'FOSUserBundle'
             ])
         ;
     }
