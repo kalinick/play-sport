@@ -7,7 +7,7 @@
     <tr>
         <td>
             <form action="{{ url('football_event_participate_user', {'id': event.id}) }}" method="post">
-                <div>Я, {{ app.user.username }}</div>
+                <div>Я, {{ app.user|getUserName }}</div>
                 <input id="participate-user" type="submit" name="participate" value="Приму участие"/>
                 <input id="unparticipate-user" type="submit" name="unparticipate" value="Не приму участие"/>
             </form>
