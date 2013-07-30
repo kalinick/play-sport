@@ -12,9 +12,12 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity
  * @ORM\Table(name="place")
+ * @ORM\HasLifecycleCallbacks
  */
 class Place
 {
+    use UploadFileTrait;
+
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -32,6 +35,11 @@ class Place
      * @ORM\JoinColumn(name="city_id", referencedColumnName="id", nullable=false)
      */
     private $city;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $imageFilename;
 
     /**
      * Get id
@@ -69,10 +77,10 @@ class Place
     /**
      * Set city
      *
-     * @param \Ps\AppBundle\Entity\City $city
+     * @param City $city
      * @return Place
      */
-    public function setCity(\Ps\AppBundle\Entity\City $city = null)
+    public function setCity(City $city = null)
     {
         $this->city = $city;
     
@@ -82,10 +90,58 @@ class Place
     /**
      * Get city
      *
-     * @return \Ps\AppBundle\Entity\City 
+     * @return City
      */
     public function getCity()
     {
         return $this->city;
+    }
+
+    /**
+     * Set image path
+     *
+     * @param string $imageFilename
+     * @return Place
+     */
+    public function setImageFilename($imageFilename)
+    {
+        $this->imageFilename = $imageFilename;
+
+        return $this;
+    }
+
+    /**
+     * Get image filename
+     *
+     * @return string
+     */
+    public function getImageFilename()
+    {
+        return $this->imageFilename;
+    }
+
+    /**
+     * @return mixed
+     */
+    protected function &getFilenameField()
+    {
+        return $this->imageFilename;
+    }
+
+    /**
+     * @ORM\PostPersist()
+     * @ORM\PostUpdate()
+     */
+    public function uploadFile()
+    {
+        $this->_uploadFile();
+    }
+
+    /**
+     * @ORM\PostRemove()
+     */
+    public function removeFile()
+    {
+        $this->_removeFile($this->imageFilename);
     }
 }

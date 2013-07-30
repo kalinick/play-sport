@@ -143,4 +143,12 @@ class City
     {
         return $this->users;
     }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->title;
+    }
 }
