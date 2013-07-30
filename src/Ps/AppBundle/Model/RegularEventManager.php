@@ -49,6 +49,7 @@ class RegularEventManager extends RegularEventModel
             $event = new Event();
             $event->setTitle($regularEvent->getTitle());
             $event->setOrganizer($regularEvent->getOrganizer());
+            $event->setPlace($regularEvent->getPlace());
             $event->setDateStart($dateStart);
             $event->setDateEnd($dateEnd);
 

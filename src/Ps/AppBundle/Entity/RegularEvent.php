@@ -54,6 +54,12 @@ class RegularEvent
     private $timeEnd;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Place", inversedBy="regularEvents")
+     * @ORM\JoinColumn(name="place_id", referencedColumnName="id", nullable=false)
+     */
+    private $place;
+
+    /**
      * Get id
      *
      * @return integer 
@@ -199,5 +205,28 @@ class RegularEvent
     public function getOrganizer()
     {
         return $this->organizer;
+    }
+
+    /**
+     * Set place
+     *
+     * @param \Ps\AppBundle\Entity\Place $place
+     * @return RegularEvent
+     */
+    public function setPlace(\Ps\AppBundle\Entity\Place $place)
+    {
+        $this->place = $place;
+    
+        return $this;
+    }
+
+    /**
+     * Get place
+     *
+     * @return \Ps\AppBundle\Entity\Place 
+     */
+    public function getPlace()
+    {
+        return $this->place;
     }
 }

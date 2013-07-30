@@ -49,6 +49,12 @@ class Event
     private $eventMembers;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Place", inversedBy="events")
+     * @ORM\JoinColumn(name="place_id", referencedColumnName="id", nullable=false)
+     */
+    private $place;
+
+    /**
      * Get id
      *
      * @return integer 
@@ -188,5 +194,28 @@ class Event
     public function getEventMembers()
     {
         return $this->eventMembers;
+    }
+
+    /**
+     * Set place
+     *
+     * @param \Ps\AppBundle\Entity\Place $place
+     * @return Event
+     */
+    public function setPlace(\Ps\AppBundle\Entity\Place $place)
+    {
+        $this->place = $place;
+    
+        return $this;
+    }
+
+    /**
+     * Get place
+     *
+     * @return \Ps\AppBundle\Entity\Place 
+     */
+    public function getPlace()
+    {
+        return $this->place;
     }
 }

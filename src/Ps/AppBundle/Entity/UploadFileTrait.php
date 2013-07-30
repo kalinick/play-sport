@@ -148,11 +148,14 @@ trait UploadFileTrait {
     }
 
     /**
-     * @param $filename
      * @return string
      */
-    public function getWebPath($filename)
+    public function getWebPath()
     {
-        return $this->_getUploadDir() . $filename;
+        if (strlen($this->getFilenameField()) > 0) {
+            return $this->_getUploadDir() . $this->getFilenameField();
+        } else {
+            return 'bundles/psfootball/images/no-photo.jpg';
+        }
     }
 }

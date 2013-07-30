@@ -7,7 +7,7 @@
 <ul class="event-list">
     {% for event in events %}
         <li>
-            <img src="{{ asset('bundles/psfootball/images/ockb.png') }}"/>
+            <img src="{{ asset(event.place.webPath) }}"/>
             <h3>{{ event.title }}</h3>
             <p><span class="date-caption-block">{{ 'events.start'|trans }} :</span>
                 {{ event.dateStart|date('H:i') }}, {{ event.dateStart|date('l')|trans({}, 'PsAppBundle') }} {{ event.dateStart|date('(d.m)') }}</p>

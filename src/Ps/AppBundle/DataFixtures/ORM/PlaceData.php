@@ -23,6 +23,8 @@ class PlaceData extends AbstractFixture implements OrderedFixtureInterface
         $manager->persist($placeOckb);
 
         $manager->flush();
+
+        $this->addReference('place-ockb', $placeOckb);
     }
 
     public function getOrder()

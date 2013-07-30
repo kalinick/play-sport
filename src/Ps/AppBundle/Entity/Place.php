@@ -42,6 +42,16 @@ class Place
     private $imageFilename;
 
     /**
+     * @ORM\OneToMany(targetEntity="Event", mappedBy="place")
+     */
+    private $events;
+
+    /**
+     * @ORM\OneToMany(targetEntity="RegularEvent", mappedBy="place")
+     */
+    private $regularEvents;
+
+    /**
      * Get id
      *
      * @return integer 
@@ -143,5 +153,79 @@ class Place
     public function removeFile()
     {
         $this->_removeFile($this->imageFilename);
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->events = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->regularEvents = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    /**
+     * Add events
+     *
+     * @param \Ps\AppBundle\Entity\Event $events
+     * @return Place
+     */
+    public function addEvent(\Ps\AppBundle\Entity\Event $events)
+    {
+        $this->events[] = $events;
+    
+        return $this;
+    }
+
+    /**
+     * Remove events
+     *
+     * @param \Ps\AppBundle\Entity\Event $events
+     */
+    public function removeEvent(\Ps\AppBundle\Entity\Event $events)
+    {
+        $this->events->removeElement($events);
+    }
+
+    /**
+     * Get events
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getEvents()
+    {
+        return $this->events;
+    }
+
+    /**
+     * Add regularEvents
+     *
+     * @param \Ps\AppBundle\Entity\RegularEvent $regularEvents
+     * @return Place
+     */
+    public function addRegularEvent(\Ps\AppBundle\Entity\RegularEvent $regularEvents)
+    {
+        $this->regularEvents[] = $regularEvents;
+    
+        return $this;
+    }
+
+    /**
+     * Remove regularEvents
+     *
+     * @param \Ps\AppBundle\Entity\RegularEvent $regularEvents
+     */
+    public function removeRegularEvent(\Ps\AppBundle\Entity\RegularEvent $regularEvents)
+    {
+        $this->regularEvents->removeElement($regularEvents);
+    }
+
+    /**
+     * Get regularEvents
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getRegularEvents()
+    {
+        return $this->regularEvents;
     }
 }

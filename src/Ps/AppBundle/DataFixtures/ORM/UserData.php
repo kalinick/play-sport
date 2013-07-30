@@ -22,6 +22,8 @@ class UserData extends AbstractFixture implements OrderedFixtureInterface
         $superAdmin->setEmailCanonical("kalinick@gmail.com");
         $superAdmin->setUsername("kalinick");
         $superAdmin->setUsernameCanonical("kalinick");
+        $superAdmin->setFirstName('Никита');
+        $superAdmin->setLastName('Калинин');
         $superAdmin->setEnabled(true);
         $superAdmin->setLocked(false);
         $superAdmin->setPlainPassword("freedom");

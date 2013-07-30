@@ -24,6 +24,7 @@ class RegularEventData extends AbstractFixture implements OrderedFixtureInterfac
         $eventOckb->setTimeStart('19:30');
         $eventOckb->setDayEnd('Mon');
         $eventOckb->setTimeEnd('21:00');
+        $eventOckb->setPlace($this->getReference('place-ockb'));
 
         $manager->persist($eventOckb);
 
