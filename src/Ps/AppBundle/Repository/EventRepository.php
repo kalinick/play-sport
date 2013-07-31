@@ -8,6 +8,7 @@
 namespace Ps\AppBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Ps\AppBundle\Classes\MysqlDateTime;
 
 class EventRepository extends EntityRepository
 {
@@ -20,7 +21,7 @@ class EventRepository extends EntityRepository
         return $this
             ->createQueryBuilder('e')
             ->where('e.dateStart > :now')
-            ->setParameter('now', time())
+            ->setParameter('now', new MysqlDateTime())
             ->orderBy('e.dateStart', 'ASC')
             ->getQuery()
             ->getResult();

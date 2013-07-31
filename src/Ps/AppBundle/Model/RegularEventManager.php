@@ -43,8 +43,8 @@ class RegularEventManager extends RegularEventModel
 
         /* @var RegularEvent $regularEvent*/
         foreach($regularEvents as $regularEvent) {
-            $dateStart = strtotime('next ' . $regularEvent->getDayStart() . ' ' . $regularEvent->getTimeStart());
-            $dateEnd = strtotime('next ' . $regularEvent->getDayEnd() . ' ' . $regularEvent->getTimeEnd());
+            $dateStart = new \DateTime('next ' . $regularEvent->getDayStart() . ' ' . $regularEvent->getTimeStart());
+            $dateEnd = new \DateTime('next ' . $regularEvent->getDayEnd() . ' ' . $regularEvent->getTimeEnd());
 
             $event = new Event();
             $event->setTitle($regularEvent->getTitle());

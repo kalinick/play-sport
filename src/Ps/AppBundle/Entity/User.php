@@ -250,4 +250,17 @@ class User extends BaseUser
     {
         return $this->phone;
     }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        $name = $this->getFirstName() . ' ' . $this->getLastName();
+        if (strlen(trim($name)) > 0) {
+            return $name;
+        }
+
+        return $this->getUsername();
+    }
 }

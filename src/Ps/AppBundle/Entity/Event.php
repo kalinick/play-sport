@@ -34,12 +34,12 @@ class Event
     private $organizer;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="datetime")
      */
     private $dateStart;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="datetime")
      */
     private $dateEnd;
 
@@ -90,10 +90,10 @@ class Event
     /**
      * Set dateStart
      *
-     * @param integer $dateStart
+     * @param \DateTime $dateStart
      * @return Event
      */
-    public function setDateStart($dateStart)
+    public function setDateStart(\DateTime $dateStart)
     {
         $this->dateStart = $dateStart;
     
@@ -103,7 +103,7 @@ class Event
     /**
      * Get dateStart
      *
-     * @return integer
+     * @return \DateTime
      */
     public function getDateStart()
     {
@@ -113,10 +113,10 @@ class Event
     /**
      * Set dateEnd
      *
-     * @param integer $dateEnd
+     * @param \DateTime $dateEnd
      * @return Event
      */
-    public function setDateEnd($dateEnd)
+    public function setDateEnd(\DateTime $dateEnd)
     {
         $this->dateEnd = $dateEnd;
     
@@ -126,7 +126,7 @@ class Event
     /**
      * Get dateEnd
      *
-     * @return integer
+     * @return \DateTime
      */
     public function getDateEnd()
     {

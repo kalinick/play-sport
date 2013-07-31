@@ -228,4 +228,12 @@ class Place
     {
         return $this->regularEvents;
     }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->title;
+    }
 }

@@ -8,6 +8,8 @@
     <parameters>
         <parameter key="ps_admin.city_admin.class">Ps\AdminBundle\Admin\CityAdmin</parameter>
         <parameter key="ps_admin.place_admin.class">Ps\AdminBundle\Admin\PlaceAdmin</parameter>
+        <parameter key="ps_admin.event_admin.class">Ps\AdminBundle\Admin\EventAdmin</parameter>
+        <parameter key="ps_admin.regular_event_admin.class">Ps\AdminBundle\Admin\RegularEventAdmin</parameter>
     </parameters>
 
     <services>
@@ -22,6 +24,20 @@
             <tag name="sonata.admin" manager_type="orm" group="Сущности" label="Места"/>
             <argument/>
             <argument>Ps\AppBundle\Entity\Place</argument>
+            <argument>SonataAdminBundle:CRUD</argument>
+        </service>
+
+        <service id="ps_admin.event_admin" class="%ps_admin.event_admin.class%">
+            <tag name="sonata.admin" manager_type="orm" group="Сущности" label="События"/>
+            <argument/>
+            <argument>Ps\AppBundle\Entity\Event</argument>
+            <argument>SonataAdminBundle:CRUD</argument>
+        </service>
+
+        <service id="ps_admin.regular_event_admin" class="%ps_admin.regular_event_admin.class%">
+            <tag name="sonata.admin" manager_type="orm" group="Сущности" label="Регулярные события"/>
+            <argument/>
+            <argument>Ps\AppBundle\Entity\RegularEvent</argument>
             <argument>SonataAdminBundle:CRUD</argument>
         </service>
     </services>
