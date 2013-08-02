@@ -10,7 +10,7 @@ namespace Ps\AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Ps\AppBundle\Repository\UserFriendRepository")
  * @ORM\Table(name="user_friend")
  */
 class UserFriend
@@ -69,10 +69,10 @@ class UserFriend
     /**
      * Set user
      *
-     * @param \Ps\AppBundle\Entity\User $user
+     * @param User $user
      * @return UserFriend
      */
-    public function setUser(\Ps\AppBundle\Entity\User $user)
+    public function setUser(User $user)
     {
         $this->user = $user;
     
@@ -82,10 +82,18 @@ class UserFriend
     /**
      * Get user
      *
-     * @return \Ps\AppBundle\Entity\User 
+     * @return User
      */
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function __toString()
+    {
+        return $this->title;
     }
 }

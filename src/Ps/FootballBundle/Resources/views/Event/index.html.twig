@@ -2,87 +2,10 @@
 {% trans_default_domain 'PsFrontBundle' %}
 
 {% block content %}
-<table border="0" style="float:left" cellpadding="10">
-    {% if user.authorized %}
-    <tr>
-        <td>
-            <form action="{{ url('football_event_participate_user', {'id': event.id}) }}" method="post">
-                <div>Я, {{ app.user|getUserName }}</div>
-                <input id="participate-user" type="submit" name="participate" value="Приму участие"/>
-                <input id="unparticipate-user" type="submit" name="unparticipate" value="Не приму участие"/>
-            </form>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <form action="{{ url('football_event_participate_friend', {'id': event.id}) }}" method="post">
-                <div>
-                    <label for="participate">Введите имя учасника:</label><input id="participate" type="text" name="title" required="required"/>
-                </div>
-                <br>
-                <div>
-                    <input id="participate-friend" type="submit" name="participate" value="Примет участие"/>
-                    <input id="unparticipate-friend" type="submit" name="unparticipate" value="Не примет участие"/>
-                </div>
-            </form>
-        </td>
-    </tr>
-    {% else %}
-    <tr>
-        <td>
-            <form action="{{ url('football_event_participate_friend', {'id': event.id}) }}" method="post">
-                <div>
-                    <label for="participate">{{ 'event.input_your_name'|trans }}</label>
-                    <input id="participate" {% if user.anonymous is defined %}value="{{ user.anonymous.title }}"{% endif %} type="text" name="title" required="required"/>
-                </div>
-                <br>
-                <div>
-                    <input id="participate-friend" type="submit" name="participate" value="{{ 'event.i_will_participate'|trans }}"/>
-                    <input id="unparticipate-friend" type="submit" name="unparticipate" value="{{ 'event.i_will_not_participate'|trans }}"/>
-                </div>
-            </form>
-        </td>
-    </tr>
-    {% endif %}
-</table>
 
-<div class="members">
-    <div class="header">
-        <div class="part">{{ 'event.participate'|trans }}</div>
-        <div class="separator"></div>
-        <div class="not-part">{{ 'event.not_participate'|trans }}</div>
-    </div>
-    <div class="body">
-        <div class="part">
-            <ul>
-                {% for eventMember in event.eventMembers %}
-                    {% if eventMember.participate %}
-                        <li>
-                            {{ eventMember.name }}
-                        </li>
-                    {% endif %}
-                {% endfor %}
-            </ul>
-        </div>
-        <div class="separator"></div>
-        <div class="not-part">
-            <ul>
-                {% for eventMember in event.eventMembers %}
-                    {% if not eventMember.participate %}
-                        <li>
-                            {{ eventMember.name }}
-                        </li>
-                    {% endif %}
-                {% endfor %}
-            </ul>
-        </div>
-    </div>
-    <div class="footer">
-        <div class="part">{{ metric.part }}</div>
-        <div class="separator"></div>
-        <div class="not-part">{{ metric.unpart }}</div>
-    </div>
-</div>
+{{ include('PsFootballBundle:Event:participate.html.twig') }}
+
+{{ include('PsFootballBundle:Event:members.html.twig') }}
 
 {% endblock%}
 
@@ -90,13 +13,18 @@
     {{ parent() }}
 <script type="text/javascript">
 $(function() {
-    $('#participate-user').button({% if user.exist and user.participate %}{ disabled: true }{% endif %});
-    $('#unparticipate-user').button({% if user.exist and not user.participate %}{ disabled: true }{% endif %});
-    $('#participate-friend').button();
-    $('#unparticipate-friend').button();
+    {% if is_granted('ROLE_USER') %}
+        $('#participate-user').button({% if participate == 'yes' or participate == 'wish' %}{ disabled: true }{% endif %});
+        $('#unparticipate-user').button({% if participate == 'no' %}{ disabled: true }{% endif %});
+        $('#participate-friend').button();
+        $('#unparticipate-friend').button();
 
-    var friends = [{{ user.friends|raw }}];
-    $('#participate').autocomplete({source: friends});
+        var friends = [{{ friends|raw }}];
+        $('#participate').autocomplete({source: friends});
+    {% else %}
+        $('#participate-anonymous').button();
+        $('#unparticipate-anonymous').button();
+    {% endif %}
 });
 </script>
 {% endblock %}

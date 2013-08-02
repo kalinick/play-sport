@@ -10,8 +10,23 @@ events:
     end: End
 
 event:
+    i: I am
     input_your_name: Input your name
+    change_your_name: Change your name
+    input_your_friend_name: Input your friend name
     i_will_participate: I will participate
     i_will_not_participate: I will not participate
+    will_participate: Will participate
+    will_not_participate: Will not participate
     participate: Participate
     not_participate: Not participate
+    wish_participate: Wish participate
+    member_limit: Maximum number of participants: _limit people
+    to_participate_please_register: To participate in this event, please register
+
+event_members:
+    rich_limit: Event members limit has been reached
+
+dialog:
+    alert: Alert
+    error: Error

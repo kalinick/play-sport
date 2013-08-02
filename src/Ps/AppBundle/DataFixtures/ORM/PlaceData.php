@@ -19,12 +19,13 @@ class PlaceData extends AbstractFixture implements OrderedFixtureInterface
     {
         $placeOckb = new Place();
         $placeOckb->setTitle('Спорт комплекс возле ОЦКБ');
-        $placeOckb->setCity($this->getReference('city-donetsk'));
+        $placeOckb->setImageFilename('ce8e0053f9ee2c2fe242df3a6ae1483504b64caa.png');
+        $placeOckb->setCity($this->getReference('city.donetsk'));
         $manager->persist($placeOckb);
 
         $manager->flush();
 
-        $this->addReference('place-ockb', $placeOckb);
+        $this->addReference('place.ockb', $placeOckb);
     }
 
     public function getOrder()

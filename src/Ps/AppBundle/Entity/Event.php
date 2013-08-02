@@ -8,6 +8,7 @@
 namespace Ps\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity(repositoryClass="Ps\AppBundle\Repository\EventRepository")
@@ -34,6 +35,23 @@ class Event
     private $organizer;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Place", inversedBy="events")
+     * @ORM\JoinColumn(name="place_id", referencedColumnName="id", nullable=false)
+     */
+    private $place;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="EventPrivacy", inversedBy="events")
+     * @ORM\JoinColumn(name="privacy_id", referencedColumnName="id", nullable=false)
+     */
+    private $privacy;
+
+    /**
+     * @ORM\OneToMany(targetEntity="EventMember", mappedBy="event")
+     */
+    private $eventMembers;
+
+    /**
      * @ORM\Column(type="datetime")
      */
     private $dateStart;
@@ -44,15 +62,9 @@ class Event
     private $dateEnd;
 
     /**
-     * @ORM\OneToMany(targetEntity="EventMember", mappedBy="event")
+     * @ORM\Column(type="integer", nullable=true)
      */
-    private $eventMembers;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="Place", inversedBy="events")
-     * @ORM\JoinColumn(name="place_id", referencedColumnName="id", nullable=false)
-     */
-    private $place;
+    private $memberLimit;
 
     /**
      * Get id
@@ -136,10 +148,10 @@ class Event
     /**
      * Set organizer
      *
-     * @param \Ps\AppBundle\Entity\User $organizer
+     * @param User $organizer
      * @return Event
      */
-    public function setOrganizer(\Ps\AppBundle\Entity\User $organizer = null)
+    public function setOrganizer(User $organizer = null)
     {
         $this->organizer = $organizer;
     
@@ -149,27 +161,28 @@ class Event
     /**
      * Get organizer
      *
-     * @return \Ps\AppBundle\Entity\User 
+     * @return User
      */
     public function getOrganizer()
     {
         return $this->organizer;
     }
+
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->eventMembers = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->eventMembers = new ArrayCollection();
     }
     
     /**
      * Add eventMembers
      *
-     * @param \Ps\AppBundle\Entity\EventMember $eventMembers
+     * @param EventMember $eventMembers
      * @return Event
      */
-    public function addEventMember(\Ps\AppBundle\Entity\EventMember $eventMembers)
+    public function addEventMember(EventMember $eventMembers)
     {
         $this->eventMembers[] = $eventMembers;
     
@@ -179,9 +192,9 @@ class Event
     /**
      * Remove eventMembers
      *
-     * @param \Ps\AppBundle\Entity\EventMember $eventMembers
+     * @param EventMember $eventMembers
      */
-    public function removeEventMember(\Ps\AppBundle\Entity\EventMember $eventMembers)
+    public function removeEventMember(EventMember $eventMembers)
     {
         $this->eventMembers->removeElement($eventMembers);
     }
@@ -189,7 +202,7 @@ class Event
     /**
      * Get eventMembers
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection|EventMember[]
      */
     public function getEventMembers()
     {
@@ -199,10 +212,10 @@ class Event
     /**
      * Set place
      *
-     * @param \Ps\AppBundle\Entity\Place $place
+     * @param Place $place
      * @return Event
      */
-    public function setPlace(\Ps\AppBundle\Entity\Place $place)
+    public function setPlace(Place $place)
     {
         $this->place = $place;
     
@@ -212,10 +225,56 @@ class Event
     /**
      * Get place
      *
-     * @return \Ps\AppBundle\Entity\Place 
+     * @return Place
      */
     public function getPlace()
     {
         return $this->place;
+    }
+
+    /**
+     * Set memberLimit
+     *
+     * @param integer $memberLimit
+     * @return Event
+     */
+    public function setMemberLimit($memberLimit)
+    {
+        $this->memberLimit = $memberLimit;
+    
+        return $this;
+    }
+
+    /**
+     * Get memberLimit
+     *
+     * @return integer 
+     */
+    public function getMemberLimit()
+    {
+        return $this->memberLimit;
+    }
+
+    /**
+     * Set privacy
+     *
+     * @param EventPrivacy $privacy
+     * @return Event
+     */
+    public function setPrivacy(EventPrivacy $privacy)
+    {
+        $this->privacy = $privacy;
+    
+        return $this;
+    }
+
+    /**
+     * Get privacy
+     *
+     * @return EventPrivacy
+     */
+    public function getPrivacy()
+    {
+        return $this->privacy;
     }
 }

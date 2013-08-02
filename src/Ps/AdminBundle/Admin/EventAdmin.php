@@ -22,6 +22,7 @@ class EventAdmin extends Admin
             ->add('dateStart')
             ->add('dateEnd')
             ->add('place')
+            ->add('privacy')
         ;
     }
 
@@ -33,6 +34,7 @@ class EventAdmin extends Admin
             ->add('dateStart', 'datetime')
             ->add('dateEnd', 'datetime')
             ->add('place')
+            ->add('privacy')
             ->end()
         ;
     }
@@ -45,6 +47,7 @@ class EventAdmin extends Admin
             ->addIdentifier('dateStart', 'datetime')
             ->addIdentifier('dateEnd', 'datetime')
             ->addIdentifier('place')
+            ->addIdentifier('privacy')
         ;
     }
 

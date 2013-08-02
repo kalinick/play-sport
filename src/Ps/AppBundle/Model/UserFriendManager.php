@@ -10,6 +10,7 @@ namespace Ps\AppBundle\Model;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 
 use Ps\AppBundle\Entity;
+use Ps\AppBundle\Repository;
 
 class UserFriendManager extends UserFriendModel
 {
@@ -19,7 +20,7 @@ class UserFriendManager extends UserFriendModel
     private $doctrine;
 
     /**
-     * @var \Doctrine\Common\Persistence\ObjectRepository
+     * @var Repository\UserFriendRepository
      */
     private $repository;
 
@@ -31,11 +32,11 @@ class UserFriendManager extends UserFriendModel
 
     /**
      * @param Entity\User $user
-     * @return array
+     * @return Entity\UserFriend[]
      */
-    public function getFriends(Entity\User $user)
+    public function getUserFriends(Entity\User $user)
     {
-        return $this->repository->findBy(['user' => $user->getId()]);
+        return $this->repository->findByUser($user);
     }
 
     /**
@@ -45,7 +46,8 @@ class UserFriendManager extends UserFriendModel
      */
     public function createIfNotExist(Entity\User $oUser, $title)
     {
-        $oUserFriend = $this->repository->findOneBy(['user' => $oUser->getId(), 'title' => $title]);
+        $oUserFriend = $this->repository->findOneOrNullByUserAndTitle($oUser, $title);
+
         if ($oUserFriend === null) {
             $oUserFriend = new Entity\UserFriend();
             $oUserFriend->setTitle($title);

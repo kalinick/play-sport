@@ -60,6 +60,17 @@ class RegularEvent
     private $place;
 
     /**
+     * @ORM\ManyToOne(targetEntity="EventPrivacy", inversedBy="regularEvents")
+     * @ORM\JoinColumn(name="privacy_id", referencedColumnName="id", nullable=false)
+     */
+    private $privacy;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $memberLimit;
+
+    /**
      * Get id
      *
      * @return integer 
@@ -187,10 +198,10 @@ class RegularEvent
     /**
      * Set organizer
      *
-     * @param \Ps\AppBundle\Entity\User $organizer
+     * @param User $organizer
      * @return RegularEvent
      */
-    public function setOrganizer(\Ps\AppBundle\Entity\User $organizer)
+    public function setOrganizer(User $organizer)
     {
         $this->organizer = $organizer;
     
@@ -200,7 +211,7 @@ class RegularEvent
     /**
      * Get organizer
      *
-     * @return \Ps\AppBundle\Entity\User 
+     * @return User
      */
     public function getOrganizer()
     {
@@ -210,10 +221,10 @@ class RegularEvent
     /**
      * Set place
      *
-     * @param \Ps\AppBundle\Entity\Place $place
+     * @param Place $place
      * @return RegularEvent
      */
-    public function setPlace(\Ps\AppBundle\Entity\Place $place)
+    public function setPlace(Place $place)
     {
         $this->place = $place;
     
@@ -223,10 +234,56 @@ class RegularEvent
     /**
      * Get place
      *
-     * @return \Ps\AppBundle\Entity\Place 
+     * @return Place
      */
     public function getPlace()
     {
         return $this->place;
+    }
+
+    /**
+     * Set memberLimit
+     *
+     * @param integer $memberLimit
+     * @return RegularEvent
+     */
+    public function setMemberLimit($memberLimit)
+    {
+        $this->memberLimit = $memberLimit;
+    
+        return $this;
+    }
+
+    /**
+     * Get memberLimit
+     *
+     * @return integer 
+     */
+    public function getMemberLimit()
+    {
+        return $this->memberLimit;
+    }
+
+    /**
+     * Set privacy
+     *
+     * @param EventPrivacy $privacy
+     * @return RegularEvent
+     */
+    public function setPrivacy(EventPrivacy $privacy)
+    {
+        $this->privacy = $privacy;
+    
+        return $this;
+    }
+
+    /**
+     * Get privacy
+     *
+     * @return EventPrivacy
+     */
+    public function getPrivacy()
+    {
+        return $this->privacy;
     }
 }

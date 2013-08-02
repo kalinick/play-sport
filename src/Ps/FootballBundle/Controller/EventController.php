@@ -7,16 +7,20 @@
 
 namespace Ps\FootballBundle\Controller;
 
-use Ps\AppBundle\Classes\CookiesAnonymousEventMember;
-use Ps\AppBundle\Model\EventMemberModel;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-
-use Ps\AppBundle\Controller\GetContainerTrait;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+
+use Ps\AppBundle\Controller\GetContainerTrait;
+use Ps\AppBundle\Classes\CookiesAnonymousEventMember;
+use Ps\AppBundle\Model\EventMemberModel;
+use Ps\AppBundle\Exception\EventMemberException;
+use Ps\AppBundle\Entity;
+
 
 class EventController extends Controller
 {
@@ -30,100 +34,68 @@ class EventController extends Controller
     {
         $oEvent = $this->getEventManager()->getEventById($id);
 
-        $user = ['friends' => ''];
-        $user['authorized'] = $this->getSecurityContext()->isGranted('ROLE_USER');
-        if ($user['authorized']) {
+        $aResult = [
+            'event' => $oEvent,
+        ];
+
+        if ( $this->getSecurityContext()->isGranted('ROLE_USER') ) {
             $oUser = $this->getSecurityContext()->getToken()->getUser();
-            $user['exist'] = $this->getEventMemberManager()->isUserExist($oEvent, $oUser);
-            $user['participate'] = $this->getEventMemberManager()->isUserParticipate($oEvent, $oUser);
-            $user['friends'] = $this->friendsToString($this->getUserFriendManager()->getFriends($oUser));
+            $oParticipation = $this->getEventMemberManager()->getUserParticipation($oEvent, $oUser);
+            $aResult['participate'] = ($oParticipation === null) ? null : $oParticipation->getTitle();
+            $aResult['friends'] = '"' . implode('", "', $this->getUserFriendManager()->getUserFriends($oUser)) . '"';
         } else {
             $anonymousId = (new CookiesAnonymousEventMember($id))->get($this->getRequest()->cookies);
-            if ($anonymousId) {
-                $user['exist'] = true;
-                $anonymousMember = $this->getEventMemberManager()->getAnonymousMemberById($anonymousId);
-                $user['anonymous'] = $anonymousMember;
-                $user['participate'] = $anonymousMember->getParticipate();
-            } else {
-                $user['exist'] = false;
-                $user['participate'] = false;
+            if ( !empty($anonymousId) ) {
+                $aResult['anonymous'] = $this->getEventMemberManager()->getAnonymousMemberById($anonymousId);
             }
         }
-        $metric = ['part' => 0, 'unpart' => 0];
 
+        $participateMetric = ['yes' => 0, 'no' => 0, 'wish' => 0];
         foreach($oEvent->getEventMembers() as $member) {
-            if ($member->getParticipate()) {
-                $metric['part']++;
-            } else {
-                $metric['unpart']++;
-            }
+            $participateMetric[$member->getParticipation()->getTitle()]++;
         }
 
-        return [
-            'event' => $oEvent,
-            'user' => $user,
-            'metric' => $metric
-        ];
+        $aResult['participateMetric'] = $participateMetric;
+
+        return $aResult;
     }
 
     /**
-     * @param array $friends
-     * @return string
-     */
-    private function friendsToString(array $friends)
-    {
-        $result = '';
-        foreach($friends as $friend) {
-            $result .= '"' . $friend->getTitle() . '", ';
-        }
-        return substr($result, 0, -2);
-    }
-
-    /**
-     * @Route("/event/{id}/participate-user", name="football_event_participate_user")
+     * @Route("/event/{id}/participate", name="football_event_participate")
      * @Method({"POST"})
-     * @Template()
      */
-    public function participateUserAction($id)
+    public function participateAction($id)
     {
         $oEvent = $this->getEventManager()->getEventById($id);
         $oUser = $this->getSecurityContext()->getToken()->getUser();
-
-        $participate = $this->getRequest()->get('participate') ?
+        $sTitle = $this->getRequest()->get('title');
+        $eType = $this->getRequest()->get('type');
+        $eParticipate = $this->getRequest()->get('participate') ?
             EventMemberModel::PARTICIPATE_YES : EventMemberModel::PARTICIPATE_NO;
-
-        $this->getEventMemberManager()->participateUser($oEvent, $oUser, $participate);
-        return new RedirectResponse($this->generateUrl('football_event_index', ['id' => $id]));
-    }
-
-    /**
-     * @Route("/event/{id}/participate-friend", name="football_event_participate_friend")
-     * @Method({"POST"})
-     * @Template()
-     */
-    public function participateFriendAction($id)
-    {
-        $title = $this->getRequest()->get('title', 'anonymous');
-        $oEvent = $this->getEventManager()->getEventById($id);
-
-        $participate = $this->getRequest()->get('participate') ?
-            EventMemberModel::PARTICIPATE_YES : EventMemberModel::PARTICIPATE_NO;
-
-        if ($this->getSecurityContext()->isGranted('ROLE_USER')) {
-            $oUser = $this->getSecurityContext()->getToken()->getUser();
-            $this->getEventMemberManager()->participateUserFriend($oEvent, $oUser, $title, $participate);
-        } else {
-            $anonymousId = (new CookiesAnonymousEventMember($id))->get($this->getRequest()->cookies);
-            $oAnonymousEM = $this->getEventMemberManager()->participateAnonymous($oEvent, $anonymousId, $title, $participate);
-        }
 
         $oResponse = new RedirectResponse($this->generateUrl('football_event_index', ['id' => $id]));
-
-        if (isset($oAnonymousEM)) {
-            $cookieAnonymousEM = new CookiesAnonymousEventMember($id);
-            $oResponse->headers->setCookie($cookieAnonymousEM->createCookies($oAnonymousEM->getId()));
+        try{
+            switch($eType) {
+                case 'user':
+                    $this->getEventMemberManager()->participateUser($oEvent, $eParticipate, $oUser);
+                    break;
+                case 'userFriend':
+                    $this->getEventMemberManager()->participateUserFriend($oEvent, $eParticipate, $oUser, $sTitle);
+                    break;
+                case 'anonymous':
+                    $anonymousId = (new CookiesAnonymousEventMember($id))->get($this->getRequest()->cookies);
+                    $oAnonymousEM = $this->getEventMemberManager()->
+                        participateAnonymous($oEvent, $eParticipate, $anonymousId, $sTitle);
+                    $cookieAnonymousEM = new CookiesAnonymousEventMember($id);
+                    $oResponse->headers->setCookie($cookieAnonymousEM->createCookies($oAnonymousEM->getId()));
+                    break;
+                default:
+                    throw new BadRequestHttpException('Participate type should be defined');
+                    break;
+            }
+        } catch (EventMemberException $ex) {
+            $this->getSession()->getFlashBag()->add('error', $ex->getMessage());
         }
-
         return $oResponse;
     }
 }

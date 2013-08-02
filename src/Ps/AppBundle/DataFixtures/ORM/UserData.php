@@ -28,12 +28,12 @@ class UserData extends AbstractFixture implements OrderedFixtureInterface
         $superAdmin->setLocked(false);
         $superAdmin->setPlainPassword("freedom");
         $superAdmin->setRoles(['ROLE_SUPER_ADMIN']);
-        $superAdmin->setCity($this->getReference('city-donetsk'));
+        $superAdmin->setCity($this->getReference('city.donetsk'));
         $manager->persist($superAdmin);
 
         $manager->flush();
 
-        $this->addReference('super-admin', $superAdmin);
+        $this->addReference('user.superAdmin', $superAdmin);
     }
 
     public function getOrder()

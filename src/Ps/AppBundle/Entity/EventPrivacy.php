@@ -1,8 +1,8 @@
 <?php
 /**
  * User: nikk
- * Date: 6/13/13
- * Time: 4:29 PM
+ * Date: 7/31/13
+ * Time: 11:30 AM
  */
 
 namespace Ps\AppBundle\Entity;
@@ -12,13 +12,10 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="place")
- * @ORM\HasLifecycleCallbacks
+ * @ORM\Table(name="event_privacy")
  */
-class Place
+class EventPrivacy
 {
-    use UploadFileTrait;
-
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -32,23 +29,12 @@ class Place
     private $title;
 
     /**
-     * @ORM\ManyToOne(targetEntity="City", inversedBy="places")
-     * @ORM\JoinColumn(name="city_id", referencedColumnName="id", nullable=false)
-     */
-    private $city;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $imageFilename;
-
-    /**
-     * @ORM\OneToMany(targetEntity="Event", mappedBy="place")
+     * @ORM\OneToMany(targetEntity="Event", mappedBy="privacy")
      */
     private $events;
 
     /**
-     * @ORM\OneToMany(targetEntity="RegularEvent", mappedBy="place")
+     * @ORM\OneToMany(targetEntity="RegularEvent", mappedBy="privacy")
      */
     private $regularEvents;
 
@@ -66,19 +52,19 @@ class Place
      * Set title
      *
      * @param string $title
-     * @return Place
+     * @return EventPrivacy
      */
     public function setTitle($title)
     {
         $this->title = $title;
-
+    
         return $this;
     }
 
     /**
      * Get title
      *
-     * @return string
+     * @return string 
      */
     public function getTitle()
     {
@@ -86,75 +72,13 @@ class Place
     }
 
     /**
-     * Set city
-     *
-     * @param City $city
-     * @return Place
-     */
-    public function setCity(City $city = null)
-    {
-        $this->city = $city;
-    
-        return $this;
-    }
-
-    /**
-     * Get city
-     *
-     * @return City
-     */
-    public function getCity()
-    {
-        return $this->city;
-    }
-
-    /**
-     * Set image path
-     *
-     * @param string $imageFilename
-     * @return Place
-     */
-    public function setImageFilename($imageFilename)
-    {
-        $this->imageFilename = $imageFilename;
-
-        return $this;
-    }
-
-    /**
-     * Get image filename
-     *
-     * @return string
-     */
-    public function getImageFilename()
-    {
-        return $this->imageFilename;
-    }
-
-    /**
      * @return mixed
      */
-    protected function &getFilenameField()
+    public function __toString()
     {
-        return $this->imageFilename;
+        return $this->title;
     }
 
-    /**
-     * @ORM\PostPersist()
-     * @ORM\PostUpdate()
-     */
-    public function uploadFile()
-    {
-        $this->_uploadFile();
-    }
-
-    /**
-     * @ORM\PostRemove()
-     */
-    public function removeFile()
-    {
-        $this->_removeFile($this->imageFilename);
-    }
     /**
      * Constructor
      */
@@ -168,7 +92,7 @@ class Place
      * Add events
      *
      * @param Event $events
-     * @return Place
+     * @return EventPrivacy
      */
     public function addEvent(Event $events)
     {
@@ -201,7 +125,7 @@ class Place
      * Add regularEvents
      *
      * @param RegularEvent $regularEvents
-     * @return Place
+     * @return EventPrivacy
      */
     public function addRegularEvent(RegularEvent $regularEvents)
     {
@@ -228,13 +152,5 @@ class Place
     public function getRegularEvents()
     {
         return $this->regularEvents;
-    }
-
-    /**
-     * @return string
-     */
-    public function __toString()
-    {
-        return $this->title;
     }
 }

@@ -1,0 +1,26 @@
+{% extends '::base_adv.html.twig' %}
+
+{% trans_default_domain 'PsFrontBundle' %}
+
+{% block js_templates %}
+    {% for flashMessage in app.session.flashbag.get('error') %}
+        <div class="flash-error" title="dialog.error">
+            {{ flashMessage|trans }}
+        </div>
+    {% endfor %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script type="text/javascript">
+        $( ".flash-error" ).dialog({
+            modal: true,
+            buttons: {
+                Ok: function() {
+                    $( this ).dialog( "close" );
+                }
+            }
+        });
+    </script>
+{% endblock %}

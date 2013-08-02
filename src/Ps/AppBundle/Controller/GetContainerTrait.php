@@ -20,6 +20,14 @@ trait GetContainerTrait
     }
 
     /**
+     * @return \Symfony\Component\HttpFoundation\Session\Session
+     */
+    protected function getSession()
+    {
+        return $this->get('session');
+    }
+
+    /**
      * @return Model\EventManager
      */
     protected function getEventManager()

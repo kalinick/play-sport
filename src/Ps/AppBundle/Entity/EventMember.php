@@ -10,7 +10,7 @@ namespace Ps\AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Ps\AppBundle\Repository\EventMemberRepository")
  * @ORM\Table(name="event_member")
  */
 class EventMember
@@ -41,14 +41,15 @@ class EventMember
     private $event;
 
     /**
+     * @ORM\ManyToOne(targetEntity="EventMemberParticipation", inversedBy="eventMembers")
+     * @ORM\JoinColumn(name="participation_id", referencedColumnName="id", nullable=false)
+     */
+    private $participation;
+
+    /**
      * @ORM\Column(type="string", nullable=true)
      */
     private $title;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $participate;
 
     /**
      * Get id
@@ -63,10 +64,10 @@ class EventMember
     /**
      * Set user
      *
-     * @param \Ps\AppBundle\Entity\User $user
+     * @param User $user
      * @return EventMember
      */
-    public function setUser(\Ps\AppBundle\Entity\User $user = null)
+    public function setUser(User $user = null)
     {
         $this->user = $user;
     
@@ -76,7 +77,7 @@ class EventMember
     /**
      * Get user
      *
-     * @return \Ps\AppBundle\Entity\User 
+     * @return User
      */
     public function getUser()
     {
@@ -86,10 +87,10 @@ class EventMember
     /**
      * Set event
      *
-     * @param \Ps\AppBundle\Entity\Event $event
+     * @param Event $event
      * @return EventMember
      */
-    public function setEvent(\Ps\AppBundle\Entity\Event $event = null)
+    public function setEvent(Event $event = null)
     {
         $this->event = $event;
     
@@ -99,7 +100,7 @@ class EventMember
     /**
      * Get event
      *
-     * @return \Ps\AppBundle\Entity\Event 
+     * @return Event
      */
     public function getEvent()
     {
@@ -107,35 +108,12 @@ class EventMember
     }
 
     /**
-     * Set participate
-     *
-     * @param integer $participate
-     * @return EventMember
-     */
-    public function setParticipate($participate)
-    {
-        $this->participate = $participate;
-    
-        return $this;
-    }
-
-    /**
-     * Get participate
-     *
-     * @return integer 
-     */
-    public function getParticipate()
-    {
-        return $this->participate;
-    }
-
-    /**
      * Set userFriend
      *
-     * @param \Ps\AppBundle\Entity\UserFriend $userFriend
+     * @param UserFriend $userFriend
      * @return EventMember
      */
-    public function setUserFriend(\Ps\AppBundle\Entity\UserFriend $userFriend = null)
+    public function setUserFriend(UserFriend $userFriend = null)
     {
         $this->userFriend = $userFriend;
     
@@ -145,7 +123,7 @@ class EventMember
     /**
      * Get userFriend
      *
-     * @return \Ps\AppBundle\Entity\UserFriend 
+     * @return UserFriend
      */
     public function getUserFriend()
     {
@@ -176,11 +154,9 @@ class EventMember
     }
 
     /**
-     * Return the name of member
-     *
      * @return string
      */
-    public function getName()
+    public function __toString()
     {
         if ($this->getUser()) {
             $name = $this->getUser()->getFirstName() . ' ' . $this->getUser()->getLastName();
@@ -196,5 +172,28 @@ class EventMember
                 return $this->title;
             }
         }
+    }
+
+    /**
+     * Set participation
+     *
+     * @param EventMemberParticipation $participation
+     * @return EventMember
+     */
+    public function setParticipation(EventMemberParticipation $participation)
+    {
+        $this->participation = $participation;
+    
+        return $this;
+    }
+
+    /**
+     * Get participation
+     *
+     * @return EventMemberParticipation
+     */
+    public function getParticipation()
+    {
+        return $this->participation;
     }
 }

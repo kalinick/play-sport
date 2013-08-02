@@ -10,6 +10,7 @@ namespace Ps\AppBundle\Entity;
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity
@@ -79,8 +80,8 @@ class User extends BaseUser
     {
         parent::__construct();
 
-        $this->events = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->userFriends = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->events = new ArrayCollection();
+        $this->userFriends = new ArrayCollection();
     }
 
     /**
@@ -96,10 +97,10 @@ class User extends BaseUser
     /**
      * Set city
      *
-     * @param \Ps\AppBundle\Entity\City $city
+     * @param City $city
      * @return User
      */
-    public function setCity(\Ps\AppBundle\Entity\City $city = null)
+    public function setCity(City $city = null)
     {
         $this->city = $city;
     
@@ -109,7 +110,7 @@ class User extends BaseUser
     /**
      * Get city
      *
-     * @return \Ps\AppBundle\Entity\City 
+     * @return City
      */
     public function getCity()
     {
@@ -119,10 +120,10 @@ class User extends BaseUser
     /**
      * Add events
      *
-     * @param \Ps\AppBundle\Entity\Event $events
+     * @param Event $events
      * @return User
      */
-    public function addEvent(\Ps\AppBundle\Entity\Event $events)
+    public function addEvent(Event $events)
     {
         $this->events[] = $events;
     
@@ -132,9 +133,9 @@ class User extends BaseUser
     /**
      * Remove events
      *
-     * @param \Ps\AppBundle\Entity\Event $events
+     * @param Event $events
      */
-    public function removeEvent(\Ps\AppBundle\Entity\Event $events)
+    public function removeEvent(Event $events)
     {
         $this->events->removeElement($events);
     }
@@ -152,10 +153,10 @@ class User extends BaseUser
     /**
      * Add userFriends
      *
-     * @param \Ps\AppBundle\Entity\UserFriend $userFriends
+     * @param UserFriend $userFriends
      * @return User
      */
-    public function addUserFriend(\Ps\AppBundle\Entity\UserFriend $userFriends)
+    public function addUserFriend(UserFriend $userFriends)
     {
         $this->userFriends[] = $userFriends;
     
@@ -165,9 +166,9 @@ class User extends BaseUser
     /**
      * Remove userFriends
      *
-     * @param \Ps\AppBundle\Entity\UserFriend $userFriends
+     * @param UserFriend $userFriends
      */
-    public function removeUserFriend(\Ps\AppBundle\Entity\UserFriend $userFriends)
+    public function removeUserFriend(UserFriend $userFriends)
     {
         $this->userFriends->removeElement($userFriends);
     }
