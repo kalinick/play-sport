@@ -23,15 +23,33 @@ class RegularEvent
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $title;
-
-    /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="regularEvents")
      * @ORM\JoinColumn(name="organizer_id", referencedColumnName="id", nullable=false)
      */
     private $organizer;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Place", inversedBy="regularEvents")
+     * @ORM\JoinColumn(name="place_id", referencedColumnName="id", nullable=false)
+     */
+    private $place;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="EventPrivacy", inversedBy="regularEvents")
+     * @ORM\JoinColumn(name="privacy_id", referencedColumnName="id", nullable=false)
+     */
+    private $privacy;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Sport", inversedBy="regularEvents")
+     * @ORM\JoinColumn(name="sport_id", referencedColumnName="id", nullable=false)
+     */
+    private $sport;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $title;
 
     /**
      * @ORM\Column(type="string", length=3, nullable=false)
@@ -52,18 +70,6 @@ class RegularEvent
      * @ORM\Column(type="string", length=5, nullable=false)
      */
     private $timeEnd;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="Place", inversedBy="regularEvents")
-     * @ORM\JoinColumn(name="place_id", referencedColumnName="id", nullable=false)
-     */
-    private $place;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="EventPrivacy", inversedBy="regularEvents")
-     * @ORM\JoinColumn(name="privacy_id", referencedColumnName="id", nullable=false)
-     */
-    private $privacy;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
@@ -285,5 +291,28 @@ class RegularEvent
     public function getPrivacy()
     {
         return $this->privacy;
+    }
+
+    /**
+     * Set sport
+     *
+     * @param Sport $sport
+     * @return RegularEvent
+     */
+    public function setSport(Sport $sport)
+    {
+        $this->sport = $sport;
+    
+        return $this;
+    }
+
+    /**
+     * Get sport
+     *
+     * @return Sport
+     */
+    public function getSport()
+    {
+        return $this->sport;
     }
 }

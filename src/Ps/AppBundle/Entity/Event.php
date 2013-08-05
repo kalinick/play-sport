@@ -47,6 +47,12 @@ class Event
     private $privacy;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Sport", inversedBy="events")
+     * @ORM\JoinColumn(name="sport_id", referencedColumnName="id", nullable=false)
+     */
+    private $sport;
+
+    /**
      * @ORM\OneToMany(targetEntity="EventMember", mappedBy="event")
      */
     private $eventMembers;
@@ -276,5 +282,28 @@ class Event
     public function getPrivacy()
     {
         return $this->privacy;
+    }
+
+    /**
+     * Set sport
+     *
+     * @param Sport $sport
+     * @return Event
+     */
+    public function setSport(Sport $sport)
+    {
+        $this->sport = $sport;
+    
+        return $this;
+    }
+
+    /**
+     * Get sport
+     *
+     * @return Sport
+     */
+    public function getSport()
+    {
+        return $this->sport;
     }
 }

@@ -1,11 +1,11 @@
-{% extends 'PsFootballBundle::base.html.twig' %}
+{% extends 'PsFrontBundle::base.html.twig' %}
 {% trans_default_domain 'PsFrontBundle' %}
 
 {% block content %}
 
-{{ include('PsFootballBundle:Event:participate.html.twig') }}
+{{ include('PsFrontBundle:AbstractEvent:participate.html.twig') }}
 
-{{ include('PsFootballBundle:Event:members.html.twig') }}
+{{ include('PsFrontBundle:AbstractEvent:members.html.twig') }}
 
 {% endblock%}
 

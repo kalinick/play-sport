@@ -27,6 +27,7 @@ class RegularEventData extends AbstractFixture implements OrderedFixtureInterfac
         $eventOckb->setPlace($this->getReference('place.ockb'));
         $eventOckb->setMemberLimit(15);
         $eventOckb->setPrivacy($this->getReference('eventPrivacy.public'));
+        $eventOckb->setSport($this->getReference('sport.football'));
 
         $manager->persist($eventOckb);
 

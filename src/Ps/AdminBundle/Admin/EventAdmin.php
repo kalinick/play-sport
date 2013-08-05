@@ -23,6 +23,7 @@ class EventAdmin extends Admin
             ->add('dateEnd')
             ->add('place')
             ->add('privacy')
+            ->add('sport')
         ;
     }
 
@@ -35,6 +36,7 @@ class EventAdmin extends Admin
             ->add('dateEnd', 'datetime')
             ->add('place')
             ->add('privacy')
+            ->add('sport')
             ->end()
         ;
     }
@@ -48,6 +50,7 @@ class EventAdmin extends Admin
             ->addIdentifier('dateEnd', 'datetime')
             ->addIdentifier('place')
             ->addIdentifier('privacy')
+            ->addIdentifier('sport')
         ;
     }
 

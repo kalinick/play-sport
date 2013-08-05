@@ -155,7 +155,7 @@ trait UploadFileTrait {
         if (strlen($this->getFilenameField()) > 0) {
             return $this->_getUploadDir() . $this->getFilenameField();
         } else {
-            return 'bundles/psfootball/images/no-photo.jpg';
+            return 'bundles/psfront/images/no-photo.jpg';
         }
     }
 }

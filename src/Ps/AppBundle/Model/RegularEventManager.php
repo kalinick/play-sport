@@ -54,6 +54,7 @@ class RegularEventManager extends RegularEventModel
             $event->setDateEnd($dateEnd);
             $event->setPrivacy($regularEvent->getPrivacy());
             $event->setMemberLimit($regularEvent->getMemberLimit());
+            $event->setSport($regularEvent->getSport());
 
             $dm->persist($event);
         }

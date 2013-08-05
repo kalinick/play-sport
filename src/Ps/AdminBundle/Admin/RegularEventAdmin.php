@@ -25,6 +25,7 @@ class RegularEventAdmin extends Admin
             ->add('timeEnd')
             ->add('place')
             ->add('privacy')
+            ->add('sport')
         ;
     }
 
@@ -39,6 +40,7 @@ class RegularEventAdmin extends Admin
             ->add('timeEnd')
             ->add('place')
             ->add('privacy')
+            ->add('sport')
             ->end()
         ;
     }
@@ -54,6 +56,7 @@ class RegularEventAdmin extends Admin
             ->addIdentifier('timeEnd')
             ->addIdentifier('place')
             ->addIdentifier('privacy')
+            ->addIdentifier('sport')
         ;
     }
 
