@@ -1,0 +1,67 @@
+{% trans_default_domain 'PsFrontBundle' %}
+
+<div class="members-wrapper">
+    {% if event.memberLimit != null %}
+        <div class="member-limit">{{ 'event.member_limit'|trans({'_limit': event.memberLimit}) }}</div>
+    {% endif %}
+
+    <div class="members">
+        <div class="header">
+            <div class="part">{{ 'event.participate'|trans }}</div>
+            <div class="separator"></div>
+            <div class="not-part">{{ 'event.not_participate'|trans }}</div>
+            {% if event.privacy.title == 'private' %}
+            <div class="separator"></div>
+            <div class="wish-part">{{ 'event.wish_participate'|trans }}</div>
+            {% endif %}
+        </div>
+        <div class="body">
+            <div class="part">
+                <ul>
+                    {% for eventMember in event.eventMembers %}
+                        {% if eventMember.participation.title == 'yes' %}
+                            <li>
+                                {{ eventMember }}
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="separator"></div>
+            <div class="not-part">
+                <ul>
+                    {% for eventMember in event.eventMembers %}
+                        {% if eventMember.participation.title == 'no' %}
+                            <li>
+                                {{ eventMember }}
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            </div>
+            {% if event.privacy.title == 'private' %}
+            <div class="separator"></div>
+            <div class="wish-part">
+                <ul>
+                    {% for eventMember in event.eventMembers %}
+                        {% if eventMember.participation.title == 'wish' %}
+                            <li>
+                                {{ eventMember }}
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+        </div>
+        <div class="footer">
+            <div class="part">{{ participateMetric.yes }}</div>
+            <div class="separator"></div>
+            <div class="not-part">{{ participateMetric.no }}</div>
+            {% if event.privacy.title == 'private' %}
+            <div class="separator"></div>
+            <div class="wish-part">{{ participateMetric.wish }}</div>
+            {% endif %}
+        </div>
+    </div>
+</div>

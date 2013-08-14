@@ -23,7 +23,7 @@ class CityData extends AbstractFixture implements OrderedFixtureInterface
 
         $manager->flush();
 
-        $this->addReference('city-donetsk', $cityDonetsk);
+        $this->addReference('city.donetsk', $cityDonetsk);
     }
 
     public function getOrder()

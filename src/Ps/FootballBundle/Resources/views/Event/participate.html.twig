@@ -1,0 +1,62 @@
+{% trans_default_domain 'PsFrontBundle' %}
+
+<table border="0" style="float:left; width: 340px" cellpadding="10">
+    {% if is_granted('ROLE_USER') %}
+        <tr>
+            <td>
+                <form action="{{ url('football_event_participate', {'id': event.id}) }}" method="post">
+                    <input type="hidden" name="type" value="user"/>
+                    <div>{{ 'event.i'|trans }} {{ app.user }}</div>
+                    <input id="participate-user" type="submit" name="participate" value="{{ 'event.i_will_participate'|trans }}"/>
+                    <input id="unparticipate-user" type="submit" name="unparticipate" value="{{ 'event.i_will_not_participate'|trans }}"/>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <form action="{{ url('football_event_participate', {'id': event.id}) }}" method="post">
+                    <input type="hidden" name="type" value="userFriend"/>
+                    <div>
+                        <label for="participate">{{ 'event.input_your_friend_name'|trans }}</label><input id="participate" type="text" name="title" required="required"/>
+                    </div>
+                    <br>
+                    <div>
+                        <input id="participate-friend" type="submit" name="participate" value="{{ 'event.will_participate'|trans }}"/>
+                        <input id="unparticipate-friend" type="submit" name="unparticipate" value="{{ 'event.will_not_participate'|trans }}"/>
+                    </div>
+                </form>
+            </td>
+        </tr>
+    {% else %}
+        {% if event.privacy.title == 'private' %}
+        <tr>
+            <td>
+                {{ 'event.to_participate_please_register'|trans }}
+            </td>
+        </tr>
+        {% else %}
+        <tr>
+            <td>
+                <form action="{{ url('football_event_participate', {'id': event.id}) }}" method="post">
+                    <input type="hidden" name="type" value="anonymous"/>
+                    <div>
+                        <label for="participate">
+                            {% if anonymous is defined %}
+                                {{ 'event.change_your_name'|trans }}
+                            {% else %}
+                                {{ 'event.input_your_name'|trans }}
+                            {% endif %}
+                        </label>
+                        <input id="participate" {% if anonymous is defined %}value="{{ anonymous.title }}"{% endif %} type="text" name="title" required="required"/>
+                    </div>
+                    <br>
+                    <div>
+                        <input id="participate-anonymous" type="submit" name="participate" value="{{ 'event.i_will_participate'|trans }}"/>
+                        <input id="unparticipate-anonymous" type="submit" name="unparticipate" value="{{ 'event.i_will_not_participate'|trans }}"/>
+                    </div>
+                </form>
+            </td>
+        </tr>
+        {% endif %}
+    {% endif %}
+</table>

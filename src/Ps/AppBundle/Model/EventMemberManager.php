@@ -8,19 +8,16 @@
 namespace Ps\AppBundle\Model;
 
 use Doctrine\Bundle\DoctrineBundle\Registry;
-use Symfony\Component\HttpKernel\Exception\ConflictHttpException;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 use Ps\AppBundle\Entity;
+use Ps\AppBundle\Repository;
+use Ps\AppBundle\Exception\EventMemberException;
 
 class EventMemberManager extends EventMemberModel
 {
     /**
-     * @var Registry
-     */
-    private $doctrine;
-
-    /**
-     * @var \Doctrine\Common\Persistence\ObjectRepository
+     * @var Repository\EventMemberRepository
      */
     private $repository;
 
@@ -31,7 +28,7 @@ class EventMemberManager extends EventMemberModel
 
     public function __construct(Registry $doctrine)
     {
-        $this->doctrine = $doctrine;
+        parent::__construct($doctrine);
         $this->repository = $this->doctrine->getRepository('PsAppBundle:EventMember');
     }
 
@@ -53,121 +50,117 @@ class EventMemberManager extends EventMemberModel
 
     /**
      * @param Entity\Event $oEvent
+     * @param string $participate
      * @param Entity\User $oUser
-     * @return bool
      */
-    public function isUserExist(Entity\Event $oEvent, Entity\User $oUser)
+    public function participateUser(Entity\Event $oEvent, $participate, Entity\User $oUser)
     {
-        $this->_tempUserId = $oUser->getId();
-
-        return $oEvent->getEventMembers()->exists(function($key, Entity\EventMember $eventMember){
-            return $eventMember->getUser() !== null &&
-                $eventMember->getUser()->getId() == $this->_tempUserId;
-        });
-    }
-
-    /**
-     * @param Entity\Event $oEvent
-     * @param Entity\User $oUser
-     * @return bool
-     */
-    public function isUserParticipate(Entity\Event $oEvent, Entity\User $oUser)
-    {
-        $this->_tempUserId = $oUser->getId();
-
-        return $oEvent->getEventMembers()->exists(function($key, Entity\EventMember $eventMember){
-            return $eventMember->getUser() !== null &&
-                ($eventMember->getUser()->getId() == $this->_tempUserId) &&
-                $eventMember->getParticipate() == self::PARTICIPATE_YES;
-        });
-    }
-
-    /**
-     * @param Entity\Event $oEvent
-     * @param Entity\User $oUser
-     * @param int $participate
-     * @throws \Symfony\Component\HttpKernel\Exception\ConflictHttpException
-     */
-    public function participateUser(Entity\Event $oEvent, Entity\User $oUser, $participate)
-    {
-        if (!in_array($participate, self::getParticipateList(), true)) {
-            throw new ConflictHttpException('Participate ' . $participate . ' not exists');
+        $oMember = $this->repository->findOneOrNullMemberByUser($oEvent, $oUser);
+        if ($oMember !== null && $oMember->getParticipation()->getTitle() === $participate) {
+            return;
         }
 
-        if ($this->isUserExist($oEvent, $oUser)) {
-            $this->_tempUserId = $oUser->getId();
-            $this->_tempParticipate = $participate;
-            $oEvent->getEventMembers()->map(function(Entity\EventMember $eventMember){
-                if ($eventMember->getUser() !== null && $eventMember->getUser()->getId() == $this->_tempUserId) {
-                    $eventMember->setParticipate($this->_tempParticipate);
-                }
-            });
-        } else {
-            $oEventMember = new Entity\EventMember();
-            $oEventMember->setEvent($oEvent);
-            $oEventMember->setUser($oUser);
-            $oEventMember->setParticipate($participate);
-            $this->doctrine->getManager()->persist($oEventMember);
+        $oParticipation = $this->getParticipation($oEvent, $participate, $oUser);
+        if ($oParticipation->getTitle() == self::PARTICIPATE_YES) {
+            $this->checkMembersLimit($oEvent);
         }
+
+        if ($oMember === null) {
+            $oMember = new Entity\EventMember();
+            $oMember->setEvent($oEvent);
+            $oMember->setUser($oUser);
+            $this->doctrine->getManager()->persist($oMember);
+        }
+        $oMember->setParticipation($oParticipation);
 
         $this->doctrine->getManager()->flush();
     }
 
     /**
      * @param Entity\Event $oEvent
+     * @param string $participate
      * @param Entity\User $oUser
-     * @param $title
-     * @param $participate
+     * @param string $title
      */
-    public function participateUserFriend(Entity\Event $oEvent, Entity\User $oUser, $title, $participate)
+    public function participateUserFriend(Entity\Event $oEvent, $participate, Entity\User $oUser, $title)
     {
-        $manager = $this->doctrine->getManager();
         $oUserFriend = $this->getUserFriendManager()->createIfNotExist($oUser, $title);
 
-        $criteria = ['event' => $oEvent->getId(), 'userFriend' => $oUserFriend->getId()];
-        $oEventMember = $this->repository->findOneBy($criteria);
-        if ($oEventMember === null) {
-            $oEventMember = new Entity\EventMember();
-            $oEventMember->setEvent($oEvent);
-            $oEventMember->setUserFriend($oUserFriend);
-
-            $manager->persist($oEventMember);
+        $oMember = $this->repository->findOneOrNullMemberByUserFriend($oEvent, $oUserFriend);
+        if ($oMember !== null && $oMember->getParticipation()->getTitle() === $participate) {
+            return;
         }
-        $oEventMember->setParticipate($participate);
 
-        $manager->flush();
+        $oParticipation = $this->getParticipation($oEvent, $participate, $oUser);
+        if ($oParticipation->getTitle() == self::PARTICIPATE_YES) {
+            $this->checkMembersLimit($oEvent);
+        }
+
+        if ($oMember === null) {
+            $oMember = new Entity\EventMember();
+            $oMember->setEvent($oEvent);
+            $oMember->setUserFriend($oUserFriend);
+
+            $this->doctrine->getManager()->persist($oMember);
+        }
+        $oMember->setParticipation($oParticipation);
+
+        $this->doctrine->getManager()->flush();
     }
 
     /**
      * @param Entity\Event $oEvent
-     * @param $anonymousId
-     * @param $title
-     * @param $participate
+     * @param string $participate
+     * @param int $anonymousId
+     * @param string $title
      * @return Entity\EventMember
      */
-    public function participateAnonymous(Entity\Event $oEvent, $anonymousId, $title, $participate)
+    public function participateAnonymous(Entity\Event $oEvent, $participate, $anonymousId, $title)
     {
-        $manager = $this->doctrine->getManager();
-
         if ($anonymousId !== null) {
-            $oEventMember = $this->getAnonymousMemberById($anonymousId);
+            $oMember = $this->getAnonymousMemberById($anonymousId);
         }
 
-        if (!empty($oEventMember)) {
-            if (!empty($title)) {
-                $oEventMember->setTitle($title);
-            }
-        } else {
-            $oEventMember = new Entity\EventMember();
-            $oEventMember->setEvent($oEvent);
-            $oEventMember->setTitle($title);
-            $manager->persist($oEventMember);
+        if (!empty($oMember) && $oMember->getParticipation()->getTitle() === $participate) {
+            return $oMember;
         }
 
-        $oEventMember->setParticipate($participate);
-        $manager->flush();
+        $oParticipation = $this->getParticipation($oEvent, $participate);
+        if ($oParticipation->getTitle() == self::PARTICIPATE_YES) {
+            $this->checkMembersLimit($oEvent);
+        }
 
-        return $oEventMember;
+        if (empty($oMember)) {
+            $oMember = new Entity\EventMember();
+            $oMember->setEvent($oEvent);
+            $oMember->setTitle('anonymous');
+            $this->doctrine->getManager()->persist($oMember);
+        }
+
+        if (!empty($title)) {
+            $oMember->setTitle($title);
+        }
+
+        $oMember->setParticipation($oParticipation);
+        $this->doctrine->getManager()->flush();
+
+        return $oMember;
+    }
+
+    /**
+     * @param Entity\Event $oEvent
+     * @throws EventMemberException
+     */
+    public function checkMembersLimit(Entity\Event $oEvent)
+    {
+        if ($oEvent->getMemberLimit() == null) {
+            return;
+        }
+        $nMembers = $this->repository->countEventMembers($oEvent);
+
+        if ($nMembers >= $oEvent->getMemberLimit()) {
+            throw new EventMemberException('event_members.rich_limit');
+        }
     }
 
     /**
@@ -180,16 +173,30 @@ class EventMemberManager extends EventMemberModel
     }
 
     /**
-     * @param $anonymousId
+     * @param int $anonymousId
      * @return Entity\EventMember
-     * @throws \Symfony\Component\HttpKernel\Exception\ConflictHttpException
+     * @throws BadRequestHttpException
      */
     public function getAnonymousMemberById($anonymousId)
     {
         $oMember = $this->getMemberById($anonymousId);
         if ($oMember->getUser() !== null || $oMember->getUserFriend() !== null) {
-            throw new ConflictHttpException();
+            throw new BadRequestHttpException();
         }
         return $oMember;
+    }
+
+    /**
+     * @param Entity\Event $oEvent
+     * @param Entity\User $oUser
+     * @return null|Entity\EventMemberParticipation
+     */
+    public function getUserParticipation(Entity\Event $oEvent, Entity\User $oUser)
+    {
+        $oMember = $this->repository->findOneOrNullMemberByUser($oEvent, $oUser);
+        if ($oMember === null) {
+            return null;
+        }
+        return $oMember->getParticipation();
     }
 }

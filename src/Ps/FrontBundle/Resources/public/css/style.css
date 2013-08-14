@@ -167,6 +167,10 @@ body {
     display: none !important;
 }
 
+#js-templates {
+    display: none;
+}
+
 ul.event-list {
     margin-right: -20px;
     padding: 0;
@@ -238,10 +242,13 @@ ul.event-list li a.more:hover{
     color: #333333;
 }
 
-.members {
+.members-wrapper {
     min-width: 400px;
-    display: table;
     float: right;
+}
+
+.members {
+    display: table;
 }
 
 .members .header, .members .footer {
@@ -279,6 +286,10 @@ ul.event-list li a.more:hover{
     background: url("../images/orange_bg.gif") repeat-x scroll 0 0 transparent;
 }
 
+.members .header .wish-part, .members .footer .wish-part {
+    background: url("../images/gray_bg.png") repeat-x scroll 0 0 transparent;
+}
+
 .members .body {
     display: table-row-group;
 }
@@ -307,4 +318,9 @@ ul.event-list li a.more:hover{
     width: 10px;
     min-width: 10px;
     background-color: transparent;
+}
+
+.member-limit {
+    font-size: 16px;
+    margin-bottom: 10px;
 }

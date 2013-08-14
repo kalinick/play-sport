@@ -8,6 +8,7 @@
 namespace Ps\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity
@@ -41,8 +42,8 @@ class City
      */
     public function __construct()
     {
-        $this->places = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->users = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->places = new ArrayCollection();
+        $this->users = new ArrayCollection();
     }
     
     /**
@@ -81,10 +82,10 @@ class City
     /**
      * Add places
      *
-     * @param \Ps\AppBundle\Entity\Place $places
+     * @param Place $places
      * @return City
      */
-    public function addPlace(\Ps\AppBundle\Entity\Place $places)
+    public function addPlace(Place $places)
     {
         $this->places[] = $places;
     
@@ -94,9 +95,9 @@ class City
     /**
      * Remove places
      *
-     * @param \Ps\AppBundle\Entity\Place $places
+     * @param Place $places
      */
-    public function removePlace(\Ps\AppBundle\Entity\Place $places)
+    public function removePlace(Place $places)
     {
         $this->places->removeElement($places);
     }
@@ -104,7 +105,7 @@ class City
     /**
      * Get places
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getPlaces()
     {
@@ -114,10 +115,10 @@ class City
     /**
      * Add users
      *
-     * @param \Ps\AppBundle\Entity\User $users
+     * @param User $users
      * @return City
      */
-    public function addUser(\Ps\AppBundle\Entity\User $users)
+    public function addUser(User $users)
     {
         $this->users[] = $users;
     
@@ -127,9 +128,9 @@ class City
     /**
      * Remove users
      *
-     * @param \Ps\AppBundle\Entity\User $users
+     * @param User $users
      */
-    public function removeUser(\Ps\AppBundle\Entity\User $users)
+    public function removeUser(User $users)
     {
         $this->users->removeElement($users);
     }
@@ -142,5 +143,13 @@ class City
     public function getUsers()
     {
         return $this->users;
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->title;
     }
 }

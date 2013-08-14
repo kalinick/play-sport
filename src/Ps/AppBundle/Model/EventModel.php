@@ -9,5 +9,6 @@ namespace Ps\AppBundle\Model;
 
 class EventModel
 {
-
+    const PRIVACY_PUBLIC = 'public';
+    const PRIVACY_PRIVATE = 'private';
 }

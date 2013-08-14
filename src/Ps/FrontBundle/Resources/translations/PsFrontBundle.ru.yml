@@ -10,8 +10,23 @@ events:
     end: Конец
 
 event:
+    i: Я,
     input_your_name: Введите ваше имя
+    change_your_name: Измените ваше имя
+    input_your_friend_name: Введите имя вашего друга
     i_will_participate: Приму участие
     i_will_not_participate: Не приму участие
+    will_participate: Примет участие
+    will_not_participate: Не примет участие
     participate: Участвует
     not_participate: Не участвует
+    wish_participate: Хотят участвовать
+    member_limit: Максимальное количество участников: _limit человек
+    to_participate_please_register: Чтобы принять участие в этом событии, пожалуйста зарегистрируйтесь
+
+event_members:
+    rich_limit: Невозможно добавить больше участников
+
+dialog:
+    alert: Внимание
+    error: Ошибка
