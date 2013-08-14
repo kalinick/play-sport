@@ -7,5 +7,5 @@
 /vendor/
 /bin/
 /.idea/
+/.settings/
 *.php~
-/web/uploads
