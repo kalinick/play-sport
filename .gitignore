@@ -8,4 +8,7 @@
 /bin/
 /.idea/
 /.settings/
+/web/uploads/
+/.buildpath/
+/.project/
 *.php~
