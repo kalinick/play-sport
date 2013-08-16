@@ -34,7 +34,7 @@ class EventManager extends EventModel
     /**
      * @param int $id
      * @return Entity\Event
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     * @throws NotFoundHttpException
      */
     public function getEventById($id)
     {
@@ -46,8 +46,22 @@ class EventManager extends EventModel
         throw new NotFoundHttpException('Not found event id ' . $id);
     }
 
-    public function getActualEvents()
+    /**
+     * Find events that not pass, for input sport
+     * @param string $sport
+     * @return Entity\Event[]
+     */
+    public function getActualEvents($sport)
     {
-        return $this->repository->findActualEvents();
+        return $this->repository->findActualEvents($sport);
+    }
+
+    /**
+     * @param $title
+     * @return Entity\Event
+     */
+    public function getEventByTitle($title)
+    {
+        return $this->repository->findEventByTitle($title);
     }
 }

@@ -59,5 +59,13 @@ trait GetContainerTrait
         return $this->get('ps_app.user_friend_manager');
     }
 
+    /**
+     * @return \FOS\UserBundle\Model\UserManagerInterface
+     */
+    protected function getUserManager()
+    {
+        return $this->get('fos_user.user_manager');
+    }
+
     protected abstract function get($id);
 }

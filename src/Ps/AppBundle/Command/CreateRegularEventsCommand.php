@@ -24,10 +24,11 @@ class CreateRegularEventsCommand extends ContainerAwareCommand
     {
         $this
             ->setName('ps:app:create-regular-events')
-            ->addArgument(
+            ->addOption(
                 'day',
-                InputArgument::OPTIONAL,
-                'Enter the day of the report',
+                null,
+                InputOption::VALUE_OPTIONAL,
+                'The day of the events',
                 date('D', strtotime('-1 day'))
             )
         ;
@@ -35,7 +36,7 @@ class CreateRegularEventsCommand extends ContainerAwareCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $day = $input->getArgument('day');
+        $day = $input->getOption('day');
         $result = $this->getRegularEventManager()->createEvents($day);
         $output->write('Created ' . $result . ' events');
     }

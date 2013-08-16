@@ -70,6 +70,8 @@ class EventMemberManager extends EventMemberModel
             $oMember->setEvent($oEvent);
             $oMember->setUser($oUser);
             $this->doctrine->getManager()->persist($oMember);
+
+            $oEvent->addEventMember($oMember);
         }
         $oMember->setParticipation($oParticipation);
 
@@ -153,7 +155,7 @@ class EventMemberManager extends EventMemberModel
      */
     public function checkMembersLimit(Entity\Event $oEvent)
     {
-        if ($oEvent->getMemberLimit() == null) {
+        if ($oEvent->getMemberLimit() === null) {
             return;
         }
         $nMembers = $this->repository->countEventMembers($oEvent);
@@ -198,5 +200,19 @@ class EventMemberManager extends EventMemberModel
             return null;
         }
         return $oMember->getParticipation();
+    }
+
+    /**
+     * @param Entity\Event $oEvent
+     * @return array
+     */
+    public function countEventParticipation(Entity\Event $oEvent)
+    {
+        $metric = [self::PARTICIPATE_YES => 0, self::PARTICIPATE_NO => 0, self::PARTICIPATE_WISH => 0];
+        foreach($oEvent->getEventMembers() as $member) {
+            $metric[$member->getParticipation()->getTitle()]++;
+        }
+
+        return $metric;
     }
 }

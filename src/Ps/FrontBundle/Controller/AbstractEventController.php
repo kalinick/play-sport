@@ -45,12 +45,7 @@ abstract class AbstractEventController extends Controller
             }
         }
 
-        $participateMetric = ['yes' => 0, 'no' => 0, 'wish' => 0];
-        foreach($oEvent->getEventMembers() as $member) {
-            $participateMetric[$member->getParticipation()->getTitle()]++;
-        }
-
-        $aResult['participateMetric'] = $participateMetric;
+        $aResult['participateMetric'] = $this->getEventMemberManager()->countEventParticipation($oEvent);
 
         return $this->render('PsFrontBundle:AbstractEvent:index.html.twig', $aResult);
     }

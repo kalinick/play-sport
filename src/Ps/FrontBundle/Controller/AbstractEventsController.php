@@ -17,11 +17,12 @@ abstract class AbstractEventsController extends Controller
     use GetContainerTrait;
 
     /**
+     * @param string $sport
      * @return Response
      */
-    public function show()
+    public function show($sport)
     {
-        $aResult = ['events' => $this->getEventManager()->getActualEvents()];
+        $aResult = ['events' => $this->getEventManager()->getActualEvents($sport)];
         return $this->render('PsFrontBundle:AbstractEvents:index.html.twig', $aResult);
     }
 }

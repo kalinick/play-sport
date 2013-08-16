@@ -10,6 +10,7 @@ namespace Ps\FootballBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
 use Ps\FrontBundle\Controller\AbstractEventsController;
+use Ps\AppBundle\Model\SportModel;
 
 class IndexController extends AbstractEventsController
 {
@@ -18,6 +19,6 @@ class IndexController extends AbstractEventsController
      */
     public function indexAction()
     {
-        return self::show();
+        return self::show(SportModel::FOOTBALL);
     }
 }

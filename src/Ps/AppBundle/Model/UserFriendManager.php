@@ -31,12 +31,26 @@ class UserFriendManager extends UserFriendModel
     }
 
     /**
-     * @param Entity\User $user
+     * @param Entity\User $oUser
      * @return Entity\UserFriend[]
      */
-    public function getUserFriends(Entity\User $user)
+    public function getUserFriends(Entity\User $oUser)
     {
-        return $this->repository->findByUser($user);
+        return $this->repository->findByUser($oUser);
+    }
+
+    /**
+     * @param Entity\User $oUser
+     * @param string $title
+     */
+    /**
+     * @param Entity\User $oUser
+     * @param string $title
+     * @return Entity\UserFriend|null
+     */
+    public function getUserFriendByName(Entity\User $oUser, $title)
+    {
+        return $this->repository->findOneOrNullByUserAndTitle($oUser, $title);
     }
 
     /**

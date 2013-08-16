@@ -16,7 +16,7 @@ class UserFriendRepository extends EntityRepository
     /**
      * @param Entity\User $oUser
      * @param $title
-     * @return Entity\UserFriend[]
+     * @return Entity\UserFriend|null
      */
     public function findOneOrNullByUserAndTitle(Entity\User $oUser, $title)
     {

@@ -1,7 +1,7 @@
 {% trans_default_domain 'PsFrontBundle' %}
 
 <div class="members-wrapper">
-    {% if event.memberLimit != null %}
+    {% if not event.memberLimit is null %}
         <div class="member-limit">{{ 'event.member_limit'|trans({'_limit': event.memberLimit}) }}</div>
     {% endif %}
 

@@ -7,19 +7,20 @@
 
 namespace Ps\FrontBundle\Tests\Controller;
 
+use Ps\AppBundle\Model\SportModel;
 use Ps\AppBundle\Tests\BaseTestCase;
+use Ps\AppBundle\Controller\GetContainerTrait;
 
 class AbstractEventsTest extends BaseTestCase
 {
-    public function setUp()
-    {
-        for($i = 0; $i< 10; $i++) {
-            parent::setUp();
-        }
-    }
+    use GetContainerTrait;
 
-    public function testA()
+    public function testEventsCreation()
     {
-        $this->assertEquals(1, 1);
+        $this->refreshDb();
+
+        $this->runConsole('ps:app:create-regular-events', ['--day' => 'mon']);
+        $events = $this->getEventManager()->getActualEvents(SportModel::FOOTBALL);
+        $this->assertEquals(count($events), 3);
     }
 }

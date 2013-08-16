@@ -3,28 +3,28 @@
 
 {% block content %}
 
-{{ include('PsFrontBundle:AbstractEvent:participate.html.twig') }}
+    {{ include('PsFrontBundle:AbstractEvent:participate.html.twig') }}
 
-{{ include('PsFrontBundle:AbstractEvent:members.html.twig') }}
+    {{ include('PsFrontBundle:AbstractEvent:members.html.twig') }}
 
 {% endblock%}
 
 {% block javascripts %}
     {{ parent() }}
-<script type="text/javascript">
-$(function() {
-    {% if is_granted('ROLE_USER') %}
-        $('#participate-user').button({% if participate == 'yes' or participate == 'wish' %}{ disabled: true }{% endif %});
-        $('#unparticipate-user').button({% if participate == 'no' %}{ disabled: true }{% endif %});
-        $('#participate-friend').button();
-        $('#unparticipate-friend').button();
+    <script type="text/javascript">
+        $(function() {
+            {% if is_granted('ROLE_USER') %}
+            $('#participate-user').button({% if participate == 'yes' or participate == 'wish' %}{ disabled: true }{% endif %});
+            $('#unparticipate-user').button({% if participate == 'no' %}{ disabled: true }{% endif %});
+            $('#participate-friend').button();
+            $('#unparticipate-friend').button();
 
-        var friends = [{{ friends|raw }}];
-        $('#participate').autocomplete({source: friends});
-    {% else %}
-        $('#participate-anonymous').button();
-        $('#unparticipate-anonymous').button();
-    {% endif %}
-});
-</script>
+            var friends = [{{ friends|raw }}];
+            $('#participate').autocomplete({source: friends});
+            {% else %}
+            $('#participate-anonymous').button();
+            $('#unparticipate-anonymous').button();
+            {% endif %}
+        });
+    </script>
 {% endblock %}

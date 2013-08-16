@@ -11,15 +11,26 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Bundle\FrameworkBundle\Client;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+
+use Ps\AppBundle\Controller\GetContainerTrait;
 
 abstract class BaseTestCase extends WebTestCase
 {
-    static protected $firstLaunch = true;
+    use GetContainerTrait;
+
+    private static $firstLaunch = true;
 
     /**
      * @var Client
      */
     protected $client;
+
+    /**
+     * @var ContainerInterface
+     */
+    protected $container;
 
     /**
      * @var Application
@@ -28,21 +39,23 @@ abstract class BaseTestCase extends WebTestCase
 
     protected function setUp()
     {
+        parent::setUp();
+
         $this->client = $this->createClient();
 
         $this->console = new Application($this->client->getKernel());
         $this->console->setAutoExit(false);
+        $this->container = $this->client->getContainer();
 
         if (self::$firstLaunch) {
             self::$firstLaunch = false;
             $this->createDb();
-            $this->refreshDb();
+            //$this->refreshDb();
         }
     }
 
     protected function createDb()
     {
-        $this->runConsole('doctrine:database:drop', ['--force' => true]);
         $this->runConsole('doctrine:database:create');
     }
 
@@ -55,9 +68,26 @@ abstract class BaseTestCase extends WebTestCase
 
     protected function runConsole($command, array $options = [])
     {
-        $options["-e"] = "test";
-        $options["-q"] = null;
-        $options = array_merge($options, array('command' => $command));
+        $options['-e'] = 'test';
+        $options['-q'] = null;
+        $options = array_merge($options, ['command' => $command]);
         return $this->console->run(new ArrayInput($options));
+    }
+
+    protected function get($id)
+    {
+        return $this->container->get($id);
+    }
+
+    protected function loginByUsername($username)
+    {
+        $user = $this->getUserManager()->findUserByUsername($username);
+
+        // 'main' - firewall name in security.yml
+        $this->getSecurityContext()->setToken(
+            new UsernamePasswordToken(
+                $user, null, 'main', $user->getRoles()
+            )
+        );
     }
 }
