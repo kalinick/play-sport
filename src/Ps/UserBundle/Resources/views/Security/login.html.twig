@@ -2,6 +2,8 @@
 
 {% trans_default_domain 'FOSUserBundle' %}
 
+{% block title %}{{ parent() }} - {{ 'security.login.login' | trans }}{% endblock %}
+
 {% block fos_user_content %}
 
 <form class="form-signin" action="{{ path("fos_user_security_check") }}" method="post">

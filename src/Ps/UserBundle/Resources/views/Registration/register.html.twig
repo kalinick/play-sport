@@ -2,6 +2,8 @@
 
 {% trans_default_domain 'FOSUserBundle' %}
 
+{% block title %}{{ parent() }} - {{ 'registration.register' | trans }}{% endblock %}
+
 {% block fos_user_content %}
     <div class="registration-block">
         <h2>{{ 'registration.register' | trans }}</h2>

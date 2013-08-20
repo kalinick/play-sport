@@ -2,6 +2,8 @@
 
 {% trans_default_domain 'PsFrontBundle' %}
 
+{% block title %}{{ 'main.do_sport'|trans }}{% endblock %}
+
 {% block js_templates %}
     {% for flashMessage in app.session.flashbag.get('error') %}
         <div class="flash-error" title="dialog.error">

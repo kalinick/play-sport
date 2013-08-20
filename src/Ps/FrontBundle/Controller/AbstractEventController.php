@@ -23,7 +23,7 @@ abstract class AbstractEventController extends Controller
 
     /**
      * @param int $id - event id
-     * @return Response
+     * @return array
      */
     public function show($id)
     {
@@ -47,7 +47,7 @@ abstract class AbstractEventController extends Controller
 
         $aResult['participateMetric'] = $this->getEventMemberManager()->countEventParticipation($oEvent);
 
-        return $this->render('PsFrontBundle:AbstractEvent:index.html.twig', $aResult);
+        return $aResult;
     }
 
     /**

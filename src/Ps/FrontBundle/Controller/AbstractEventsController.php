@@ -18,11 +18,11 @@ abstract class AbstractEventsController extends Controller
 
     /**
      * @param string $sport
-     * @return Response
+     * @return array
      */
     public function show($sport)
     {
         $aResult = ['events' => $this->getEventManager()->getActualEvents($sport)];
-        return $this->render('PsFrontBundle:AbstractEvents:index.html.twig', $aResult);
+        return $aResult;
     }
 }

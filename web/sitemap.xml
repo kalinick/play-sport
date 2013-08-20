@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+    <url>
+        <loc>http://do-sport.com.ua/</loc>
+        <changefreq>monthly</changefreq>
+        <priority>1</priority>
+    </url>
+
+    <url>
+        <loc>http://do-sport.com.ua/ru/football/</loc>
+        <changefreq>monthly</changefreq>
+        <priority>1</priority>
+    </url>
+
+    <url>
+        <loc>http://do-sport.com.ua/ru/login</loc>
+        <changefreq>monthly</changefreq>
+        <priority>1</priority>
+    </url>
+
+    <url>
+        <loc>http://do-sport.com.ua/ru/register/</loc>
+        <changefreq>monthly</changefreq>
+        <priority>1</priority>
+    </url>
+
+    <url>
+        <loc>http://do-sport.com.ua/en/football/</loc>
+        <changefreq>monthly</changefreq>
+        <priority>1</priority>
+    </url>
+
+    <url>
+        <loc>http://do-sport.com.ua/en/login</loc>
+        <changefreq>monthly</changefreq>
+        <priority>1</priority>
+    </url>
+
+    <url>
+        <loc>http://do-sport.com.ua/en/register/</loc>
+        <changefreq>monthly</changefreq>
+        <priority>1</priority>
+    </url>
+
+</urlset>
