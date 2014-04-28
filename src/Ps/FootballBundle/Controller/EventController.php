@@ -13,10 +13,13 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 use Ps\FrontBundle\Controller\AbstractEventController;
 
+/**
+ * @Route("/event")
+ */
 class EventController extends AbstractEventController
 {
     /**
-     * @Route("/event/{id}", name="football_event_index")
+     * @Route("/{id}", name="football_event_index")
      * @Template()
      */
     public function indexAction($id)
@@ -26,7 +29,7 @@ class EventController extends AbstractEventController
     }
 
     /**
-     * @Route("/event/{id}/participate", name="football_event_participate")
+     * @Route("/{id}/participate", name="football_event_participate")
      * @Method({"POST"})
      */
     public function participateAction($id)

@@ -59,7 +59,7 @@ class EventMemberModel
             return $this->participationRepository->findOneByTitle(self::PARTICIPATE_NO);
         }
 
-        if ($oEvent->getPrivacy()->getTitle() === EventModel::PRIVACY_PUBLIC) {
+        if ($oEvent->getPrivacy()->getId() === EventModel::PRIVACY_PUBLIC) {
             return $this->participationRepository->findOneByTitle(self::PARTICIPATE_YES);
         } else {
             if ($oUser !== null) {

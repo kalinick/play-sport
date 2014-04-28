@@ -47,6 +47,12 @@ class RegularEvent
     private $sport;
 
     /**
+     * @ORM\ManyToOne(targetEntity="EventState", inversedBy="regularEvents")
+     * @ORM\JoinColumn(name="state_id", referencedColumnName="id", nullable=false)
+     */
+    private $state;
+
+    /**
      * @ORM\Column(type="string", length=255)
      */
     private $title;
@@ -314,5 +320,25 @@ class RegularEvent
     public function getSport()
     {
         return $this->sport;
+    }
+
+    /**
+     * @param EventState $state
+     *
+     * @return RegularEvent
+     */
+    public function setState(EventState $state)
+    {
+        $this->state = $state;
+
+        return $this;
+    }
+
+    /**
+     * @return EventState
+     */
+    public function getState()
+    {
+        return $this->state;
     }
 }

@@ -38,7 +38,7 @@ class RegularEventManager extends RegularEventModel
      */
     public function createEvents($day)
     {
-        $regularEvents = $this->repository->findEventsByDayStart($day);
+        $regularEvents = $this->repository->findActiveEventsByDayStart($day);
         $dm = $this->doctrine->getManager();
 
         /* @var RegularEvent $regularEvent*/

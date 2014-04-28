@@ -2,10 +2,13 @@
 {% trans_default_domain 'PsFrontBundle' %}
 
 {% block content %}
+    <span id="participate-block">
+        {{ include('PsFrontBundle:AbstractEvent:participate.html.twig') }}
+    </span>
 
-    {{ include('PsFrontBundle:AbstractEvent:participate.html.twig') }}
-
-    {{ include('PsFrontBundle:AbstractEvent:members.html.twig') }}
+    <span id="members-block">
+        {{ include('PsFrontBundle:AbstractEvent:members.html.twig') }}
+    </span>
 
 {% endblock%}
 
@@ -25,6 +28,17 @@
             $('#participate-anonymous').button();
             $('#unparticipate-anonymous').button();
             {% endif %}
+
+            refreshMembers();
+
         });
+
+        function refreshMembers() {
+            setTimeout(function(){
+                $('#members-block').load('{{ url('event_load_members', {'id': id}) }}', [], function(){
+                    refreshMembers();
+                });
+            }, 60000);
+        }
     </script>
 {% endblock %}

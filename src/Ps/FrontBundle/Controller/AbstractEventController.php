@@ -31,6 +31,7 @@ abstract class AbstractEventController extends Controller
 
         $aResult = [
             'event' => $oEvent,
+            'id' => $id,
         ];
 
         if ( $this->getSecurityContext()->isGranted('ROLE_USER') ) {

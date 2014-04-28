@@ -61,7 +61,7 @@ class User extends BaseUser
 
     /**
      * @ORM\ManyToOne(targetEntity="City", inversedBy="users")
-     * @ORM\JoinColumn(name="city_id", referencedColumnName="id", nullable=false)
+     * @ORM\JoinColumn(name="city_id", referencedColumnName="id", nullable=true)
      * @Assert\NotBlank()
      */
     private $city;

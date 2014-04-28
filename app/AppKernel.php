@@ -18,16 +18,17 @@ class AppKernel extends Kernel
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new FOS\UserBundle\FOSUserBundle(),
             new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
-            new Knp\Bundle\MenuBundle\KnpMenuBundle(),
+            new Sonata\CoreBundle\SonataCoreBundle(),
             new Sonata\BlockBundle\SonataBlockBundle(),
-            new Sonata\jQueryBundle\SonatajQueryBundle(),
-            new Sonata\AdminBundle\SonataAdminBundle(),
             new Sonata\DoctrineORMAdminBundle\SonataDoctrineORMAdminBundle(),
+            new Sonata\AdminBundle\SonataAdminBundle(),
+            new Knp\Bundle\MenuBundle\KnpMenuBundle(),
             new Ps\UserBundle\PsUserBundle(),
             new Ps\FrontBundle\PsFrontBundle(),
             new Ps\FootballBundle\PsFootballBundle(),
             new Ps\AppBundle\PsAppBundle(),
             new Ps\AdminBundle\PsAdminBundle(),
+            new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
