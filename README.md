@@ -9,6 +9,6 @@
     rsync -r /tmp/play-sport /var/www/;
     cd /var/www/play-sport;
     rm -rf .git;
+    php app/console doctrine:migrations:migrate --no-interaction;
     php app/console --env='dev' cache:clear;
     php app/console --env='prod' cache:clear;
-    php app/console doctrine:migrations:migrate --no-interaction;
