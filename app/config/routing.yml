@@ -1,11 +1,3 @@
-ps_admin:
-    resource: "@PsAdminBundle/Controller/"
-    type:     annotation
-    prefix:   /{_locale}/admin
-    defaults:  { _locale: en }
-    requirements:
-        _locale: en|ru
-
 ps_app_bundle:
     resource: "@PsAppBundle/Controller/"
     type:     annotation
