@@ -21,6 +21,9 @@
                 {% set route = app.request.attributes.get('_route') %}
                 <li {% if route == 'front_index' %}class="active"{% endif %}><a href="{{ url('front_index') }}" class="item"><span>{{ 'main.main'|trans }}</span></a></li>
                 <li {% if route == 'football_index' %}class="active"{% endif %}><a href="{{ url('football_index') }}" class="item"><span>{{ 'main.football'|trans }}</span></a></li>
+                {% if is_granted('ROLE_ADMIN') %}
+                <li><a href="{{ url('sonata_admin_dashboard') }}" class="item"><span>{{ 'title_dashboard'|trans({}, 'SonataAdminBundle') }}</span></a></li>
+                {% endif %}
                 {#<li><a href="" class="item"><span>о нас</span></a></li>#}
             </ul>
 

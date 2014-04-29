@@ -26,7 +26,8 @@
         "sonata-project/doctrine-orm-admin-bundle": "2.3.*@dev",
         "doctrine/migrations": "dev-master",
         "doctrine/doctrine-migrations-bundle": "dev-master",
-        "symfony/icu": "~1.0"
+        "symfony/icu": "~1.0",
+        "bcc/cron-manager-bundle": "v2.3.0"
     },
     "scripts": {
         "post-install-cmd": [

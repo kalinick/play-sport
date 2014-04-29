@@ -2,14 +2,15 @@
 
 ## Setup
 
+    sudo su;
     cd /tmp;
     if cd play-sport; then git pull; else git clone git@github.com:kalinick/play-sport.git; cd play-sport; fi;
     echo 'if install not work, please run php composer.phar update';
     php composer.phar install;
-    su www-data;
-    rsync -r /tmp/play-sport /var/www/;
+    rm -rf app/cache/dev;
+    sudo -u www-data rsync -r /tmp/play-sport /var/www/;
     cd /var/www/play-sport;
-    rm -rf .git;
-    php app/console doctrine:migrations:migrate --no-interaction;
-    php app/console --env='dev' cache:clear;
-    php app/console --env='prod' cache:clear;
+    sudo -u www-data rm -rf .git;
+    sudo -u www-data php app/console doctrine:migrations:migrate --no-interaction;
+    sudo -u www-data php app/console --env='dev' cache:clear;
+    sudo -u www-data php app/console --env='prod' cache:clear;
