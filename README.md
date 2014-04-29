@@ -5,7 +5,7 @@
     sudo su;
     cd /tmp;
     if cd play-sport; then git pull; else git clone git@github.com:kalinick/play-sport.git; cd play-sport; fi;
-    echo 'if install not work, please run php composer.phar update';
+    echo 'if install not work, please run php composer.phar update symfony/icu';
     php composer.phar install;
     rm -rf app/cache/dev;
     sudo -u www-data rsync -r /tmp/play-sport /var/www/;

@@ -67,3 +67,7 @@ _sonata_admin:
     defaults:  { _locale: en }
     requirements:
         _locale: en|ru
+
+BCCCronManagerBundle:
+    resource: "@BCCCronManagerBundle/Resources/config/routing.xml"
+    prefix:   /{_locale}/admin/cron-manager
