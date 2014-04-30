@@ -1,6 +1,6 @@
 # Play sport
 
-## Setup
+## Deploy
 
     sudo su;
     cd /tmp;
