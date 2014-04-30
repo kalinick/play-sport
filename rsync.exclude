@@ -5,3 +5,6 @@ app/logs**
 bin**
 .gitignore
 .travis.yml
+composer.json
+composer.lock
+composer.phar
