@@ -10,10 +10,15 @@
         git clone git@github.com:kalinick/play-sport.git;
         cd play-sport;
     fi;
+    cp /tmp/play-sport/app/config/parameters.yml.prod.dist /tmp/play-sport/app/config/parameters.yml
+    rm -rf /tmp/play-sport/app/cache/prod;
+    rm -rf /tmp/play-sport/app/cache/dev;
     echo 'if install not work, please run php composer.phar update symfony/icu';
     php composer.phar install;
     php app/console assetic:dump --env=prod --no-debug;
+
     rsync -r -v --exclude-from="/tmp/play-sport/rsync.exclude" /tmp/play-sport /var/www/;
+
     cd /var/www/play-sport;
     if [ ! -d app/cache ]; then
         mkdir app/cache;
