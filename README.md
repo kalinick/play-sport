@@ -12,6 +12,7 @@
     fi;
     echo 'if install not work, please run php composer.phar update symfony/icu';
     php composer.phar install;
+    php app/console assetic:dump --env=prod --no-debug;
     rsync -r -v --exclude-from="/tmp/play-sport/rsync.exclude" /tmp/play-sport /var/www/;
     cd /var/www/play-sport;
     if [ ! -d app/cache ]; then

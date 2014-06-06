@@ -34,6 +34,6 @@ class GetUserNameExtension extends \Twig_Extension
 
     public function getName()
     {
-        return 'st_get_user_name_extension';
+        return 'ps_get_user_name_extension';
     }
 }
