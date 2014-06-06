@@ -177,13 +177,13 @@ class EventMemberManager extends EventMemberModel
     /**
      * @param int $anonymousId
      * @return Entity\EventMember
-     * @throws BadRequestHttpException
+     * @throws \RuntimeException
      */
     public function getAnonymousMemberById($anonymousId)
     {
         $oMember = $this->getMemberById($anonymousId);
-        if ($oMember->getUser() !== null || $oMember->getUserFriend() !== null) {
-            throw new BadRequestHttpException();
+        if (!($oMember instanceof Entity\EventMember) || $oMember->getUser() !== null || $oMember->getUserFriend() !== null) {
+            throw new \RuntimeException();
         }
         return $oMember;
     }

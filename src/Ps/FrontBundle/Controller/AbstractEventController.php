@@ -42,7 +42,10 @@ abstract class AbstractEventController extends Controller
         } else {
             $anonymousId = (new CookiesAnonymousEventMember($id))->get($this->getRequest()->cookies);
             if ( !empty($anonymousId) ) {
-                $aResult['anonymous'] = $this->getEventMemberManager()->getAnonymousMemberById($anonymousId);
+                try {
+                    $aResult['anonymous'] = $this->getEventMemberManager()->getAnonymousMemberById($anonymousId);
+                } catch (\RuntimeException $ex) {
+                }
             }
         }
 
