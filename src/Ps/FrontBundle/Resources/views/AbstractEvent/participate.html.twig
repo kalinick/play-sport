@@ -1,6 +1,15 @@
 {% trans_default_domain 'PsFrontBundle' %}
 
 <table border="0" style="float:left; width: 340px" cellpadding="10">
+    <tr>
+        <td style="border-bottom: 1px solid black">
+            <div>{{ event.title }}</div>
+            <div><span class="date-caption-block">{{ 'events.start'|trans }} :</span>
+                {{ event.dateStart|date('H:i') }}, {{ event.dateStart|date('l')|trans({}, 'PsAppBundle') }} {{ event.dateStart|date('(d.m)') }}</div>
+            <div><span class="date-caption-block">{{ 'events.end'|trans }} :</span>
+                {{ event.dateEnd|date('H:i') }}, {{ event.dateEnd|date('l')|trans({}, 'PsAppBundle') }} {{ event.dateEnd|date('(d.m)') }}</div>
+        </td>
+    </tr>
     {% if is_granted('ROLE_USER') %}
         <tr>
             <td>
