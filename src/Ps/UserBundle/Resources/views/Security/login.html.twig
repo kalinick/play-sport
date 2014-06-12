@@ -28,6 +28,10 @@
 
     <input type="checkbox" id="remember_me" name="_remember_me" value="on" checked="checked" />
     <label for="remember_me">{{ 'security.login.remember_me'|trans }}</label>
+
+    <br><br>
+
+    <a href="{{ url('fos_user_resetting_request') }}">{{ 'resetting.request.submit'|trans }}</a>
 </form>
 
 {% endblock fos_user_content %}
