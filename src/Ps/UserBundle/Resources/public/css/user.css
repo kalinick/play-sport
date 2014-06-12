@@ -66,7 +66,8 @@ select:focus, input[type="file"]:focus, input[type="radio"]:focus, input[type="c
     color: #B94A48;
 }
 
-.form-signin {
+.form-signin,
+.fos_user_resetting_request {
     background-color: #FFFFFF;
     border: 1px solid #D0D0D0;
     border-radius: 5px 5px 5px 5px;
@@ -76,11 +77,13 @@ select:focus, input[type="file"]:focus, input[type="radio"]:focus, input[type="c
     padding: 19px 29px 29px;
 }
 
-.form-signin h2{
-    font-size: 31.5px;
+.form-signin h2,
+.fos_user_resetting_request h2 {
+    font-size: 31px;
 }
 
-.form-signin input[type="text"], .form-signin input[type="password"] {
+.form-signin input[type="text"], .form-signin input[type="password"],
+.fos_user_resetting_request input[type="text"], .fos_user_resetting_request input[type="password"] {
     font-size: 16px;
     height: auto;
     margin-bottom: 15px;
@@ -121,8 +124,4 @@ select:focus, input[type="file"]:focus, input[type="radio"]:focus, input[type="c
     margin-bottom: 20px;
     padding: 8px 35px 8px 20px;
     text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
-}
-
-.registration-block form div ul li {
-
 }
