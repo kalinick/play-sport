@@ -1,18 +1,22 @@
-form:
-    first_name: First name:
-    last_name: Last name:
-    phone: Phone:
-    city: City:
-
 login:
     please_sing_in: Please sign in
 
-registration:
-    register: Registration
+donetsk: Donetsk
 
 security:
     login:
         login: Login
         pass: Password
 
-donetsk: Donetsk
+registration:
+    register: Registration
+
+resetting:
+    request:
+        username: Username or email address:
+
+form:
+    first_name: First name:
+    last_name: Last name:
+    phone: Phone:
+    city: City:

@@ -1,0 +1,20 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+{% block fos_user_content %}
+{% include "FOSUserBundle:Resetting:reset_content.html.twig" %}
+{% endblock fos_user_content %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $(function() {
+            $(".fos_user_resetting_reset input[type='submit']").button();
+            $("#fos_user_resetting_form div").each(function(){
+                var label = $(this).find('label')
+
+                $(this).find('input').attr('placeholder', label.html());
+                label.remove();
+            });
+        });
+    </script>
+{% endblock %}
