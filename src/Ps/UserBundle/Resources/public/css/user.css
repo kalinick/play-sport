@@ -82,6 +82,8 @@ select:focus, input[type="file"]:focus, input[type="radio"]:focus, input[type="c
 .fos_user_resetting_request h2,
 .fos_user_resetting_reset h2 {
     font-size: 31px;
+    font-weight: bold;
+    margin: 20px 0;
 }
 
 .form-signin input[type="text"], .form-signin input[type="password"],

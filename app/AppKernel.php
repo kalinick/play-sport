@@ -30,6 +30,7 @@ class AppKernel extends Kernel
             new Ps\AdminBundle\PsAdminBundle(),
             new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
             new BCC\CronManagerBundle\BCCCronManagerBundle(),
+            new Ps\SlavsBundle\PsSlavsBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

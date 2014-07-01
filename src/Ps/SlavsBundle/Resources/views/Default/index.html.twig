@@ -1,0 +1,23 @@
+{% extends 'PsFrontBundle::base.html.twig' %}
+
+{% block content %}
+    <table class="slavs">
+        <tr >
+            <th>Номер</th>
+            <th>Игрок</th>
+            <th>Сыграл</th>
+            <th>Проставил</th>
+            <th>Голов</th>
+        </tr>
+
+    {% for row in slavs %}
+        <tr>
+            <td>{{ row.number }}</td>
+            <td>{{ row.player }}</td>
+            <td>{{ row.games }}</td>
+            <td>{{ row.substitute }}</td>
+            <td>{{ row.goals }}</td>
+        </tr>
+    {% endfor %}
+    </table>
+{% endblock%}

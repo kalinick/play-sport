@@ -10,7 +10,7 @@ parameters:
     mailer_transport: gmail
     mailer_user: do.sport.site@gmail.com
     mailer_password: creWes2a
-    
+
     locale: ru
     secret: 36a75cb9ac40fd4f3bf9fe9f577bb0a0
 

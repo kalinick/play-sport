@@ -25,6 +25,13 @@ ps_user:
     requirements:
         _locale: en|ru
 
+ps_slavs:
+    resource: "@PsSlavsBundle/Controller/"
+    type:     annotation
+    prefix:   /{_locale}/slavs/
+    requirements:
+        _locale: en|ru
+
 admin:
     resource: '@SonataAdminBundle/Resources/config/routing/sonata_admin.xml'
     prefix: /{_locale}/admin
