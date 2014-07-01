@@ -17,7 +17,7 @@ class DefaultController extends Controller
     public function indexAction()
     {
         return [
-            'slavs' => $this->get('doctrine')->getRepository('PsSlavsBundle:Slavs')->findAllOrdered('number')
+            'slavs' => $this->get('doctrine')->getRepository('PsSlavsBundle:Slavs')->findAllOrdered('goals', 'DESC')
         ];
     }
 }
